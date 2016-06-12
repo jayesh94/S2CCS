@@ -1,0 +1,619 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
+ */
+/*  The scilab code is sent here from Mars.java for scanning and parsing purpose.
+   The code is detected line by line in this JavaCC based on the tokens and the grammar assigned to those tokens in this
+   .jj code. While detecting the scilab code various classes are called for conversion of code based on the detected tokens
+   and their allocated grammar. Whole scilab code should be detected here based on the code written.
+
+    Compilation of this JavaCC code will create 7 java classes in which the interpretation of MainGrammar.jj is present in java coding.
+   The seven files are namely ParseException.java, SecondJavaCC.java, SecondJavaCCConstants.java, SecondJavaCCTokenManager.java,
+   SimpleCharStream.java, Token.java and TokenMgrError.java. To make changes to this file one has to learn JavaCC coding.
+   Good understanding of regex (regular expression) is required for coding in JavaCC.*/ 
+
+ 
+options
+{
+  static = true;
+}
+
+PARSER_BEGIN(SecondJavaCC)
+package Main;
+//import MatrixOp.CallMatrix;
+public class SecondJavaCC
+{}
+
+PARSER_END(SecondJavaCC)
+
+SKIP :
+{
+  " "
+| "\r"
+| "\t"
+| < COMMENT : < COMMN > > 
+}
+
+TOKEN : /* LOOPING */
+{
+  < FOR    : "for" >
+| < DO     : "do" >
+| < WHILE  : "while" >
+| < IF     : "if" >
+| < THEN   : "then" >
+| < ELSEIF : "elseif" >
+| < ELSE   : "else" >
+| < SWITCH : "switch" >
+| < CASE   : "case" >
+| < END    : "end">
+| < COLON : ":">
+}
+
+SPECIAL_TOKEN : /* GENERAL */
+{
+  < COMMN : "//" (~["\r","\n"])* >//("\n" | "\r" | "\r\n") >
+}
+
+TOKEN : /* NEWLINE */
+{
+   < #SEMICOL : ";">
+|  < NEWLINE :< SEMICOL > |(["\n","\r"])+  >
+}
+
+TOKEN : /* FUNCTIONS */
+{
+   < LENGTH :"length">
+|  < SOUND : "sound">
+|  < DISP : "disp">
+}
+
+TOKEN : /* MATH OPERATORS */
+{
+  < PLUS : "+" >
+| < MINUS : "-" >
+| < MULTIPLY : "*" >
+| < DIVIDE : "/" >
+}
+
+
+TOKEN : /* LOGICAL OPERATORS */ //"((!A) && B) || C"  1.~ 2.& 3.|
+{
+  < AND : "&" >
+| < OR : "|" >
+| < NOT : "~" >
+}
+
+TOKEN : /* CONDITION OPERATORS */
+{
+
+  < EQUAL  : "=">
+| < LESS : "<">
+| < GREAT : ">">
+| < LESSEQ : "<=">
+| < GREATEQ : ">=">
+| < EQEQ : "==">
+| < NOTEQ : "~=">
+}
+
+TOKEN : /* VARIABLES AND CLC CLOSE*/
+{
+
+  < CLC : "clc">
+| < CLEARALL : "clear all">
+| < VARIABLE : (["0"-"9"])* (["a"-"z","A"-"Z","_"])+ (["a"-"z","A"-"Z","_","0"-"9"])* >
+
+}
+
+TOKEN : /* PARENTHESIS */
+{
+  < LROU : "(" >
+| < RROU : ")" >
+| < #LCUR : "{" >
+| < #RCUR : "}" >
+| < #LSQR : "[" >
+| < #RSQR : "]" >
+| < LMATBR : < LSQR >|< LCUR >>
+| < RMATBR : < RSQR >|< RCUR >>
+}
+
+TOKEN : /* DISPLAY */
+{
+    < STRING_LITERAL :  "\""(~["\"","'"])*"\"" >
+}
+
+TOKEN : /* TYPE */
+{
+  < NUMBER : < FLOAT >|< INTEGER > >
+|  < #INTEGER: (["0"-"9"])+ >
+|  < #FLOAT: (["0"-"9"])+"."(["0"-"9"])* > 
+}
+
+//****************************************************************************************************		SCILAB
+
+int scilab() :
+{}
+{ 
+  (< NEWLINE >)*
+  clc()statements()
+  (nesting())?  // ERROR :  end occurring at last are not being checked
+  (< EOF >)?
+  {
+    Mars.line.add(Mars.buffer.toString());
+    Changing.MainProgram =Changing.MainProgram+"\n"+Mars.buffer.toString();
+    Mars.buffer.setLength(0);
+    return 0;
+  }
+}
+
+//	**************************************************************************************************		NESTING
+
+void nesting() :
+{}
+{
+  (forLoop()|ifLoop()|whileLoop())
+  
+}
+
+//  **************************************************************************************************		FOR LOOP
+
+void forLoop() :
+{}
+{
+  for1()
+ 
+  statements()
+  (nesting()statements())?
+  end()
+}
+
+void for1 () :
+{}
+{
+  	
+  < FOR > { Mars.buffer.append(token.image + " "); }
+   forCondition()
+   {
+   
+     String forloop=Mars.buffer.toString();
+     String pattern = "(.*)(=)(.*)(:)(.*)";
+     Changing.MainProgram =Changing.MainProgram+"\nfor " +  (forloop.replaceFirst("for","").replaceAll(" ", "")).replaceAll(pattern, "($1=($3-1);$1<$5;$1++) {");
+	Find.FindInitializevariable(forloop.replaceFirst("for","").replaceAll(" ", "").split("=")[0], "Int16");
+	Mars.buffer.setLength(0);
+   }
+   
+   (< DO >)?
+  newLine()
+}
+
+
+void forCondition() :
+{}
+{
+  initialisation() sum()
+   < COLON >{ Mars.buffer.append(token.image); }
+  sum()
+   
+}
+
+//	****************************************************************************************************	IF LOOP
+
+void ifLoop() :
+{}
+{
+  < IF >{ Mars.buffer.append(token.image +" "); }
+   conditions(){ Mars.buffer.append(" {"); }
+   (< THEN >)?
+   {
+    String ifloop=Mars.buffer.toString();
+    Mars.line.add(ifloop);
+    Changing.MainProgram =Changing.MainProgram+"\n"+Mars.buffer.toString();
+    Mars.buffer.setLength(0);
+   }
+  newLine()
+   statements()
+ ( end()
+ | elseLoop()
+ | elseifLoop()
+ | nesting()statements()
+ | < EOF > { Mars.buffer.append("}"); } )
+ 
+}
+
+void elseifLoop() :
+{}
+{
+  { Mars.buffer.append("}"+"\n"); } 
+  < ELSEIF >{ Mars.buffer.append(token.image +" "); }
+  conditions(){ Mars.buffer.append(" {"); }
+  (< THEN >)?
+  newLine()
+  statements()
+ ( end()
+| elseifLoop(){ Mars.buffer.append("}"); }
+| elseLoop(){ Mars.buffer.append("}"); }
+| nesting()statements(){ Mars.buffer.append("}"); }
+| < EOF >{ Mars.buffer.append("}"); })
+ 
+}
+
+void elseLoop() :
+{}
+{
+   { Mars.buffer.append("}"+"\n"); } 
+    < ELSE >{ Mars.buffer.append(token.image +" {"); }
+    newLine()
+    statements()
+    (nesting()statements())?
+  ( //LOOKAHEAD(end())
+    end()
+  | < EOF >{ Mars.buffer.append("}"); } )
+}
+
+//**************************************************************************************************	WHILE LOOP
+
+void whileLoop() :
+{}
+{
+  < WHILE >{Mars.buffer.append(token.image+" ");}
+  conditions(){ Mars.buffer.append(" {"); }
+  (< DO >)?
+  
+  newLine()
+  statements()
+  (nesting()statements())?
+  end()
+ 
+}
+
+//***************************************************************************************************	CONDITIONS
+
+void conditions() :
+{}
+{
+  con()
+  (LOOKAHEAD(2)
+  (
+    logicalOperator()
+  | conditionOperator()
+  )
+  con()
+  )*
+}
+
+void con() :
+{}
+{
+ LOOKAHEAD(3)
+< LROU >{ Mars.buffer.append(token.image); }
+conditions()
+< RROU >{ Mars.buffer.append(token.image); }
+| condition()
+}
+
+void condition() :
+{}
+{ 
+	sum()
+   (LOOKAHEAD(2)
+  (
+    logicalOperator()
+  | conditionOperator()
+  )
+  con()
+  )*
+}
+
+//**********************************************************************************************		LOGICAL OPERATORS
+
+void logicalOperator() :
+{}
+{
+  < AND >{ Mars.buffer.append(token.image); }
+| < OR >{ Mars.buffer.append(token.image); }
+| < NOT >{ Mars.buffer.append(token.image); }
+}
+
+//**********************************************************************************************		CONDITOINAL OPERATORS
+
+void conditionOperator() :
+{}
+{
+  < EQUAL>{ Mars.buffer.append(token.image); }
+| < LESS >{ Mars.buffer.append(token.image); }
+| < GREAT >{ Mars.buffer.append(token.image); }
+| < LESSEQ >{ Mars.buffer.append(token.image); }
+| < GREATEQ >{ Mars.buffer.append(token.image); }
+| < EQEQ >{ Mars.buffer.append(token.image); }
+| < NOTEQ >{ Mars.buffer.append("!"); }
+}
+
+//*****************************************************************************************************		STATEMENTS
+
+void statements() :
+{}
+{
+ 
+  (LOOKAHEAD(2)statement())*
+ 
+}
+
+void statement() :
+{}
+{
+  sound()
+| initialisation()(array()| expression())
+  
+}
+
+//*****************************************************************************************************		INITIALISATION
+
+void initialisation() :
+{}
+{
+  variable()
+  {}
+  < EQUAL >{ Mars.buffer.append(token.image); }
+}
+
+//*****************************************************************************************************************	ARRAY and MAT
+
+void array () :
+{}
+{
+ 
+ < LMATBR >{ Mars.buffer.append(token.image ); }
+ (inMat())*{String st = token.image;}
+ < RMATBR >{ Mars.buffer.append(token.image ); }
+(< NEWLINE >)+ 
+  {
+   
+     String str = Mars.buffer.toString();
+     
+ 	if (str.contains(";") && !java.util.regex.Pattern.compile("\\$"+str.split("=")[0]+"\\$").matcher(Changing.InputVariable).find())
+ 	{
+	Find.arraylength(str);
+	str=str.split("=")[0]+"["+Find.ArrayLength[0]+"]"+"["+Find.ArrayLength[1]+"]="+str.split("=")[1];
+    
+    if (java.util.regex.Pattern.compile("(\\d+)").matcher((str.split("=")[1]).replaceAll("(\\,|\\;|\\{|\\}|\\[|\\])","")).matches())
+    {
+ 	  String str1 = (str.replaceAll("[\\[]", "{{").replaceAll("[\\]]", "}}").replaceAll("\\;","},{")).replaceFirst("\\{\\{","[").replaceFirst("\\}\\}","]").replaceFirst("\\{\\{","[").replaceFirst("\\}\\}","]");
+      Find.FindInitializevariable(str1,"int");
+      Changing.matrixVariable=Changing.matrixVariable+(str.split("=")[0])+"$";
+      
+    }
+    else if (java.util.regex.Pattern.compile("(\\d+)").matcher((str.split("=")[1]).replaceAll("(\\,|\\;|\\{|\\}|\\[|\\])","").replaceAll("[\\.]","")).matches() )
+    {
+      	String str1 = (str.replaceAll("[\\[]", "{{").replaceAll("[\\]]", "}}").replaceAll("\\;","},{")).replaceFirst("\\{\\{","[").replaceFirst("\\}\\}","]").replaceFirst("\\{\\{","[").replaceFirst("\\}\\}","]");
+      Find.FindInitializevariable(str1,"float");
+      Changing.matrixVariable=Changing.matrixVariable+(str.split("=")[0])+"$";
+    }
+    else if (java.util.regex.Pattern.compile("(\\w+)").matcher((str.split("=")[1]).replaceAll("(\\,|\\;|\\{|\\}|\\[|\\])","").replaceAll("[\\.]","")).matches() )
+    {
+       Equation.MatrixWithVariables(str);
+    }
+
+ 	  
+}
+ else if (!java.util.regex.Pattern.compile("\\$"+str.split("=")[0]+"\\$").matcher(Changing.InputVariable).find())
+ {
+   	
+ 	Find.arraylength(str);
+    str=str.split("=")[0]+"["+Find.ArrayLength[0]+"]="+str.split("=")[1];
+    
+    if (java.util.regex.Pattern.compile("(\\[)(\\d*)(\\])").matcher((str.split("=")[1]).replaceAll("\\,","")).matches())
+    {
+ 
+		String str1 = str.replaceAll("[\\[]", "{").replaceAll("[\\]]", "}").replaceFirst("\\{","[").replaceFirst("\\}","]");
+      Find.FindInitializevariable(str1,"int");
+      Changing.matrixVariable=Changing.matrixVariable+(str.split("=")[0])+"$";
+      
+    }
+    else if (java.util.regex.Pattern.compile("(\\[)(\\d*)(\\])").matcher((str.split("=")[1]).replaceAll("\\,","").replaceAll("[\\.]","")).matches() )
+    {
+      	String str1 = str.replaceAll("[\\[]", "{").replaceAll("[\\]]", "}").replaceFirst("\\{","[").replaceFirst("\\}","]");
+      Find.FindInitializevariable(str1,"float");
+      Changing.matrixVariable=Changing.matrixVariable+(str.split("=")[0])+"$";
+    }
+    else if (java.util.regex.Pattern.compile("(\\w*)").matcher((str.split("=")[1]).replaceAll("(\\,|\\;|\\{|\\}|\\[|\\])","").replaceAll("[\\.]","")).matches() )
+    {
+       Equation.MatrixWithVariables(str);
+    }
+  
+  }
+    
+   Mars.buffer.setLength(0);
+  }
+}
+
+void inMat() :
+{}
+{
+  
+( < LMATBR >{ Mars.buffer.append(token.image ); })
+ inArray()
+ (< RMATBR >{ Mars.buffer.append(token.image ); })
+(
+  (< NEWLINE>{ Mars.buffer.append(token.image ); }
+| ",")
+( < LMATBR >{ Mars.buffer.append(token.image ); })
+ inArray()
+ (< RMATBR >{ Mars.buffer.append(token.image ); }))*
+ 
+| inArray()
+(< NEWLINE>{ Mars.buffer.append(token.image ); }
+  inArray())*
+}
+
+void inArray() :
+{}
+{
+  
+  inAr()
+(LOOKAHEAD(1)
+   (",")?{ Mars.buffer.append(",");}
+  inAr()
+)*
+
+}
+
+void inAr() :
+{}
+{
+  (variable()
+| < NUMBER >{ Mars.buffer.append(token.image ); })
+}
+
+//*****************************************************************************************************		EXPRESSION
+
+void expression() :
+{}
+{
+  sum()
+    {
+   	 Equation.matrix(Mars.buffer.toString());
+	 Mars.buffer.setLength(0);
+  }
+  newLine()
+
+}
+
+//*****************************************************************************************************		SUM
+
+void sum() :
+{}
+{
+  term()
+  (
+    (
+      < PLUS >{ Mars.buffer.append(token.image); }
+    | < MINUS >{ Mars.buffer.append(token.image);
+    System.out.println(Mars.buffer.toString()); }
+    )
+    term()
+  )*
+ 
+}
+
+void term() :
+{}
+{
+  unary()
+  (
+    (
+      < MULTIPLY >{ Mars.buffer.append(token.image);}
+    | < DIVIDE >{ Mars.buffer.append(token.image); }
+    )
+    unary()
+  )*
+}
+
+void unary() :
+{}
+{
+  < MINUS >{ Mars.buffer.append(token.image); }
+   elements()
+| elements()
+}
+
+//***************************************************************************************************		ELEMENTS
+
+void elements() :
+{}
+{
+  element()
+  (
+   // LOOKAHEAD(2)< LROU >{ Mars.buffer.append(token.image);
+    LOOKAHEAD(2)< LROU >{ Mars.buffer.append("["); }
+// element()
+sum()
+< RROU >{ Mars.buffer.append("]"); }
+    )*
+}
+
+
+void element() :
+{}
+{
+  
+< NUMBER >{ Mars.buffer.append(token.image); }
+| < SOUND >{ Mars.buffer.append(token.image); }
+< LROU >{ Mars.buffer.append(token.image); }
+ sum()
+< RROU >{ Mars.buffer.append(token.image);}
+| < LENGTH >{ Mars.buffer.append(token.image); }
+< LROU >{ Mars.buffer.append(token.image);}
+ sum()
+< RROU >{ Mars.buffer.append(token.image);}
+| variable()
+| LOOKAHEAD(2)< LROU >{ Mars.buffer.append(token.image); }
+ sum()
+< RROU >{ Mars.buffer.append(token.image); }
+
+}
+
+
+//******************************************************************************************************		CLC
+
+void clc() :
+{}
+{
+  (< CLC > ( < NEWLINE >)+| < CLEARALL > ( < NEWLINE >)+)*
+}
+
+//******************************************************************************************************		VARIABLE
+
+void variable() :
+{}
+{
+	< VARIABLE >{ Mars.buffer.append(token.image); }
+}
+
+//*******************************************************************************************************		NEWLINE
+
+void newLine() :
+{}
+{
+	(< NEWLINE >)+
+  {
+    Mars.line.add(Mars.buffer.toString());
+    Changing.MainProgram =Changing.MainProgram+"\n"+Mars.buffer.toString();
+    Mars.buffer.setLength(0);
+  }
+}
+
+//********************************************************************************************************		END
+
+void end() :
+{}
+{
+  < END >{ Mars.buffer.append("}");}
+  newLine()
+}
+
+//*********************************************************************************************************		SOUND
+
+void sound() :
+{}
+{
+  < SOUND >{
+Mars.buffer.append(token.image);
+      }
+  < LROU >{
+Mars.buffer.append(token.image);
+      }
+  variable()
+  ("'")?(","{
+Mars.buffer.append(",");
+      })?
+  (< NUMBER >{
+ Mars.buffer.append(token.image);
+     })?
+  < RROU >{
+ Mars.buffer.append(token.image);
+     }
+     
+ {
+   SoundOutPut.sound(Mars.buffer.toString());
+   Mars.buffer.setLength(0);
+ }
+  newLine()
+}
