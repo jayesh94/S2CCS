@@ -134,7 +134,7 @@ int scilab() :
 { 
   (< NEWLINE >)*
   clc()statements()
-  (nesting())?  // ERROR :  end occurring at last are not being checked
+  (nesting())? 
   (< EOF >)?
   {
     Mars.line.add(Mars.buffer.toString());
