@@ -356,6 +356,8 @@ void initialisation() :
 
 //*****************************************************************************************************************	ARRAY and MAT
 
+// patil yaha kya ho raha hi mujhe  samajh nahi aa raha just check please and add some comments
+
 void array () :
 {}
 {
