@@ -129,7 +129,7 @@ TOKEN : /* TYPE */
 
 //****************************************************************************************************		SCILAB
 
-int scilab() :
+int scilab() :  // Whole scilab code will be detected in this method using concepts of recursion
 {}
 { 
   (< NEWLINE >)*
@@ -170,11 +170,13 @@ void for1 () :
 {
   	
   < FOR > { Mars.buffer.append(token.image + " "); }
-   forCondition()
+   forCondition() // converting the detected for loop line to .c equivalent for loop code and sa
    {
-   
+  
      String forloop=Mars.buffer.toString();
      String pattern = "(.*)(=)(.*)(:)(.*)";
+     
+     // removing first for then checking the pattern specified and then replacing with required pattern, saving to MainProgram in Changing class
      Changing.MainProgram =Changing.MainProgram+"\nfor " +  (forloop.replaceFirst("for","").replaceAll(" ", "")).replaceAll(pattern, "($1=($3-1);$1<$5;$1++) {");
 	Find.FindInitializevariable(forloop.replaceFirst("for","").replaceAll(" ", "").split("=")[0], "Int16");
 	Mars.buffer.setLength(0);
@@ -357,7 +359,7 @@ void initialisation() :
 //*****************************************************************************************************************	ARRAY and MAT
 
 // patil yaha kya ho raha hi mujhe  samajh nahi aa raha just check please and add some comments
-
+// see the above comment
 void array () :
 {}
 {
