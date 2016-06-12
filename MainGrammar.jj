@@ -356,8 +356,6 @@ void initialisation() :
 
 //*****************************************************************************************************************	ARRAY and MAT
 
-// patil yaha kya ho raha hi mujhe  samajh nahi aa raha just check please and add some comments
-
 void array () :
 {}
 {
@@ -371,35 +369,36 @@ void array () :
      String str = Mars.buffer.toString();
      
  	if (str.contains(";") && !java.util.regex.Pattern.compile("\\$"+str.split("=")[0]+"\\$").matcher(Changing.InputVariable).find())
-//array contain ';' i.e matrix are present (ex. a=[2 5 2;4 5 6]) and not initialized in Input Variable
+//array contain ';' i.e matrix is present (ex. a=[2 5 2;4 5 6]) and not initialized in Input Variable of class changing
  	{
 	Find.arraylength(str);  //find size of matrix (ex. a=[2 5 2;4 5 6] i.e size of matrix is 2,3)
+	                        // str is sent to arraylength method of class Find   
 	str=str.split("=")[0]+"["+Find.ArrayLength[0]+"]"+"["+Find.ArrayLength[1]+"]="+str.split("=")[1]; 
-	//matrix represent according to c language (ex. a=[2 5 2;4 5 6] chanhe to a[2][3]=[2 5 2;4 5 6])
+	//matrix represented according to c language (ex. a=[2 5 2;4 5 6] changes to a[2][3]=[2 5 2;4 5 6])
     
     if (java.util.regex.Pattern.compile("(\\d+)").matcher((str.split("=")[1]).replaceAll("(\\,|\\;|\\{|\\}|\\[|\\])","")).matches())
-    // in matrix all are integer no floating value are present (ex. a=[6 4 7;8 7 0])
+    // in matrix all are integer no floating value is present (ex. a=[6 4 7;8 7 0])
     {
  	  String str1 = (str.replaceAll("[\\[]", "{{").replaceAll("[\\]]", "}}").replaceAll("\\;","},{")).replaceFirst("\\{\\{","[").replaceFirst("\\}\\}","]").replaceFirst("\\{\\{","[").replaceFirst("\\}\\}","]");
-      //above only add size not change bracket according to c hence replace all '[' and ']'by '{' and '}' and then replace first two '{' and '}' by '[' and ']' becouse matrix size always in square brackets
+      //above change brackets according to c hence replace all '[' and ']'by '{' and '}' and then replace first two '{' and '}' by '[' and ']' because matrix size always in square brackets
       Find.FindInitializevariable(str1,"int");
-      //new matrix are initialized in Input Variable
+      //new matrix is initialized in Input Variable
       Changing.matrixVariable=Changing.matrixVariable+(str.split("=")[0])+"$";
-      //new matrix are initialized in matrixVariable (this is java workspace)
+      //new matrix is initialized in matrixVariable of class Changing (this is S2CCS workspace where variables are stored with "$" and end)
       
     }
     else if (java.util.regex.Pattern.compile("(\\d+)").matcher((str.split("=")[1]).replaceAll("(\\,|\\;|\\{|\\}|\\[|\\])","").replaceAll("[\\.]","")).matches() )
-    // in matrix floating value are present (ex. a=[6 4.2 4 ;5 8.2 8 ])
+    // in matrix floating value is present (ex. a=[6 4.2 4 ;5 8.2 8 ])
     {
       	String str1 = (str.replaceAll("[\\[]", "{{").replaceAll("[\\]]", "}}").replaceAll("\\;","},{")).replaceFirst("\\{\\{","[").replaceFirst("\\}\\}","]").replaceFirst("\\{\\{","[").replaceFirst("\\}\\}","]");
-      //above only add size not change bracket according to c hence replace all '[' and ']'by '{' and '}' and then replace first '{' and '}' by '[' and ']' becouse array size always in square brackets
+      //above change brackets according to c hence replace all '[' and ']'by '{' and '}' and then replace first '{' and '}' by '[' and ']' because array size always in square brackets
       Find.FindInitializevariable(str1,"float");
-      //new matrix are initialized in Input Variable
+      //new matrix is initialized in Input Variable
       Changing.matrixVariable=Changing.matrixVariable+(str.split("=")[0])+"$";
-      //new matrix are initialized in matrixVariable (this is java workspace)
+      //new matrix is initialized in matrixVariable (this is S2CCS workspace)
     }
     else if (java.util.regex.Pattern.compile("(\\w+)").matcher((str.split("=")[1]).replaceAll("(\\,|\\;|\\{|\\}|\\[|\\])","").replaceAll("[\\.]","")).matches() )
-    // in matrix any varable are present (ex. a=[d 4 t;g 8 k])
+    // in matrix any variable is present (ex. a=[d 4 t;g 8 k])
     {
        Equation.MatrixWithVariables(str);
        //go to  Equation.MatrixWithVariables class for finding the value of variable 
@@ -414,14 +413,14 @@ void array () :
  	Find.arraylength(str);
  	//find the size of array
     str=str.split("=")[0]+"["+Find.ArrayLength[0]+"]="+str.split("=")[1];
-    //array represent according to c language (ex. a=[2 5 4 5 6] chanhe to a[5]=[2 5 4 5 6])
+    //array represent according to c language (ex. a=[2 5 4 5 6] change to a[5]=[2 5 4 5 6])
     
     if (java.util.regex.Pattern.compile("(\\[)(\\d*)(\\])").matcher((str.split("=")[1]).replaceAll("\\,","")).matches())
-   // in array all are integer no floating value are present (ex. a=[6 4 7])
+   // in array all are integer no floating value is present (ex. a=[6 4 7])
     {
- 
-		String str1 = str.replaceAll("[\\[]", "{").replaceAll("[\\]]", "}").replaceFirst("\\{","[").replaceFirst("\\}","]");
-      //above only add size not change bracket according to c hence replace all '[' and ']'by '{' and '}' and then replace first '{' and '}' by '[' and ']' becouse array size always in square brackets
+ 	
+      String str1 = str.replaceAll("[\\[]", "{").replaceAll("[\\]]", "}").replaceFirst("\\{","[").replaceFirst("\\}","]");
+      //above change brackets according to c hence replace all '[' and ']'by '{' and '}' and then replace first '{' and '}' by '[' and ']' because array size always in square brackets
       Find.FindInitializevariable(str1,"int");  //new array are initialized in Input Variable
       Changing.matrixVariable=Changing.matrixVariable+(str.split("=")[0])+"$";
       //new array are initialized in matrixVariable (this is java workspace)
@@ -431,13 +430,13 @@ void array () :
    // in array floating value are present (ex. a=[5 8.2 8])
     {
       	String str1 = str.replaceAll("[\\[]", "{").replaceAll("[\\]]", "}").replaceFirst("\\{","[").replaceFirst("\\}","]");
-     //above only add size not change bracket according to c hence replace all '[' and ']'by '{' and '}' and then replace first two '{' and '}' by '[' and ']' becouse matrix size always in square brackets
+     //above change brackets according to c hence replace all '[' and ']'by '{' and '}' and then replace first two '{' and '}' by '[' and ']' because matrix size always in square brackets
       Find.FindInitializevariable(str1,"float");  //new array are initialized in Input Variable
       Changing.matrixVariable=Changing.matrixVariable+(str.split("=")[0])+"$";
-      //new array are initialized in matrixVariable (this is java workspace)
+      //new array is initialized in matrixVariable (this is java workspace)
     }
     else if (java.util.regex.Pattern.compile("(\\w*)").matcher((str.split("=")[1]).replaceAll("(\\,|\\;|\\{|\\}|\\[|\\])","").replaceAll("[\\.]","")).matches() )
-     // in array any varable are present (ex. a=[d 4 t])
+     // in array any varable is present (ex. a=[d 4 t])
     {
        Equation.MatrixWithVariables(str);
        //go to  Equation.MatrixWithVariables class for finding the value of variable 
