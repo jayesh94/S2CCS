@@ -102,27 +102,32 @@ public class Equation {
 						// var1, var2 and division sign is sent to EquationSolver.TWOMatrixAddMulSubDiv for dviding both matrices in c representation
 						EquationSolver.TWOMatrixAddMulSubDiv(var1, var2, "/");
 						//when both matrix divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
-						//small equation =a+f./55
+						//small equation =a+f./55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\.\\/]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
-					// Variable one (var1) is matrix variable in two variables
+					// Variable one (var1) is matrix variable among two variables var1 & var2
 					else if(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.Initializevariable).find()){
-
+						// var1, var2 and division sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for dviding matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"/");
+						//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f./55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\.\\/]"+var2), Equation.AnsTemp.split("=")[1]);
 						
 					}
 					
-					// Variable two (var2) is matrix variable in two variables
+					// Variable two (var2) is matrix variable among two variables var1 & var2
 					else if(Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.Initializevariable).find()){
-
+						// var1, var2 and division sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for dviding matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"/");
+						//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f./55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\.\\/]"+var2), Equation.AnsTemp.split("=")[1]);
 						
 					}
 					
 					// No matrix variable in two variables
+					//ex. var1 are present in Changing.variablevalue or it is any number like '2'
 					else if((Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
 							&& Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
 						|| (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
