@@ -32,16 +32,17 @@ public class Equation {
 			//Find position or index of ")" Separate the equation which is in brackets and create small equation
 			if(input.indexOf(')', lastindex)!=-1) {
 				lastindex=input.indexOf(')', lastindex);
-				smallequation= input.substring(index, lastindex+1 ) ;
-				A = smallequation;
+				smallequation= input.substring(index, lastindex+1 ) ; 
+				A = smallequation; //small equation stored in temp variable 'A' 
 			}
 			//if no bracket are present small equation
+			//i.e input= 2+var then small equation = 2+var
 			else {
 				A = input;
 				smallequation=(A.split("[\\=]"))[1];
 				A = smallequation;
 			}
-			
+			//in this loop equation are represented according to c language 
 			//while smallequation is not equal to variable or number
 			while(!Pattern.compile("(\\w*)").matcher(smallequation.replaceAll("[()]", "").replaceAll("\\.", "")).matches()){
 				
@@ -86,20 +87,22 @@ public class Equation {
 				//    and sent to the dot power method to convert in c code which is yet to be done
 				// TODO
 				else if(smallequation.indexOf("./")!=-1){
-					String[] var = smallequation.split("[\\/]");
-					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:\\*]");
-					String var1 = vartemp1[vartemp1.length-1];
+					String[] var = smallequation.split("[\\/]"); //small equation are split by / and creat two variable
+											//ex. if small equation is a+v./55 then creat a+v and 55
+					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:\\*]");   
+					String var1 = vartemp1[vartemp1.length-1];  // stored 'v' in var1
 					String[] vartemp2 = var[1].split("[\\+\\-\\/\\^\\~\\=\\:]");
-					String var2 = vartemp2[0];
+					String var2 = vartemp2[0];  // stored '55' in var2
 					A=A.replaceAll("[\\.]", "[\\.]");
 					A=A.replaceAll("[\\/]", "[\\/]");
 					
 					// Variable one & variable two both are matrix
-					
 					if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
 							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-						
+						// var1, var2 and division sign is sent to EquationSolver.TWOMatrixAddMulSubDiv for dviding both matrices in c representation
 						EquationSolver.TWOMatrixAddMulSubDiv(var1, var2, "/");
+						//when both matrix divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f./55
 						smallequation=smallequation.replaceFirst((var1+"[\\.\\/]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
