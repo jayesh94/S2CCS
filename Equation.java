@@ -127,7 +127,10 @@ public class Equation {
 					}
 					
 					// No matrix variable in two variables
-					//ex. var1 are present in Changing.variablevalue or it is any number like '2'
+					//var1 are present in Changing.variablevalue and var2 are present in Changing.variablevalue
+					//or var1 are present in Changing.variablevalue and var2 is any number like '2'
+					//or var2 are present in Changing.variablevalue and var1 is any number like '2'
+					//var1 and var2 both are number
 					else if((Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
 							&& Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
 						|| (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
@@ -136,7 +139,7 @@ public class Equation {
 							&& Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
 						|| (Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
 							&& Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find())){
-						
+						// var1, var2 and division sign is sent to EquationSolver.TwoVarORNumber for dviding  two numbers or variable in c representation
 						EquationSolver.TwoVarORNumber(var1, var2, "/");
 						smallequation=smallequation.replaceFirst((var1+"[\\.\\/]"+var2), Equation.AnsTemp);
 					}
