@@ -28,9 +28,9 @@ public class Changing {
 	public static String MainProgram="\n//Program\n";
 	
 	public static String Ending ="}";
-	public static String variablevalue ="$";
+	public static String variablevalue ="$"; // stores the variables which are not reated to both real time and matrix
 	public static String InputVariable="$"; // used for checking initialization of variables
 	public static String matrixVariable="$"; // workspace of variables defining matrix 
-	public static String InputOutputVariable="$";
+	public static String InputOutputVariable="$";// Two variables that user specifies in real time mode Ex. $input$output$&
 			
 }
