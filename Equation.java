@@ -46,9 +46,14 @@ public class Equation {
 			while(!Pattern.compile("(\\w*)").matcher(smallequation.replaceAll("[()]", "").replaceAll("\\.", "")).matches()){
 				
 				// .^ (dot power) comes in small Equation 
+				// Ex. input= c+(b-(a.^2))
+				//     small equation= a.^2
+				//   In below loop the small equation is split from ".^" and "a" and "2" is obtained 
+				//    and sent to the dot power method to convert in c code which is yet to be done
+				// TODO
 				if(smallequation.indexOf(".^")!=-1){
-					//Separate two variable in var1 and var2
-					String[] var = smallequation.split("[\\/]");
+					
+					String[] var = smallequation.split("[\\^]");
 					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:\\*]");
 					String var1 = vartemp1[vartemp1.length-1];	
 					String[] vartemp2 = var[1].split("[\\+\\-\\/\\^\\~\\=\\:]");
@@ -58,9 +63,14 @@ public class Equation {
 					A=A.replaceAll("[\\^]", "[\\^]");		
 				}
 				
-				// ^ (power) are come in small Equation 
+				// ^ (power) are come in small Equation
+				// Ex. input= c+(b-(a^2))
+				//     small equation= a^2
+				//   In below loop the small equation is split from "^" and "a" and "2" is obtained 
+				//    and sent to the dot power method to convert in c code which is yet to be done
+				// TODO
 				else if(smallequation.indexOf("^")!=-1){
-					String[] var = smallequation.split("[\\/]");
+					String[] var = smallequation.split("[\\^]");
 					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:\\*]");
 					String var1 = vartemp1[vartemp1.length-1];
 					String[] vartemp2 = var[1].split("[\\+\\-\\/\\^\\~\\=\\:]");
@@ -70,6 +80,11 @@ public class Equation {
 				}
 				
 				// ./ (Dot Division) are come in small Equation 
+				// Ex. input= c+(b-(a./2))
+				//     small equation= a./2
+				//   In below loop the small equation is split from "./" and "a" and "2" is obtained 
+				//    and sent to the dot power method to convert in c code which is yet to be done
+				// TODO
 				else if(smallequation.indexOf("./")!=-1){
 					String[] var = smallequation.split("[\\/]");
 					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:\\*]");
@@ -80,6 +95,7 @@ public class Equation {
 					A=A.replaceAll("[\\/]", "[\\/]");
 					
 					// Variable one & variable two both are matrix
+					
 					if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
 							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
 						
