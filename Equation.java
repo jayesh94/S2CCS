@@ -84,7 +84,7 @@ public class Equation {
 				// Ex. input= c+(b-(a./2))
 				//     small equation= a./2
 				//   In below loop the small equation is split from "./" and "a" and "2" is obtained 
-				//    and sent to the dot power method to convert in c code which is yet to be done
+				//    and sent to the dot Division method to convert in c code which is yet to be done
 				// TODO
 				else if(smallequation.indexOf("./")!=-1){
 					String[] var = smallequation.split("[\\/]"); //small equation are split by / and creat two variable
@@ -139,24 +139,30 @@ public class Equation {
 							&& Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
 						|| (Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
 							&& Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find())){
-						// var1, var2 and division sign is sent to EquationSolver.TwoVarORNumber for dviding  two numbers or variable in c representation
+						// var1, var2 and division sign is sent to EquationSolver.TwoVarORNumber for dviding  two numbers or variables in c representation
 						EquationSolver.TwoVarORNumber(var1, var2, "/");
+						//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f./55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\.\\/]"+var2), Equation.AnsTemp);
 					}
 					
-					// variable two is matrix variable and first is input variable
+					// variable var2 is matrix variable and var1 is input variable i.e real time variable
 					else if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find() 
 							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
 						
 					}
 					
-					// variable one is matrix variable and second is input variable
+					// variable var1 is matrix variable and var2 is input variable i.e real time variable
 					else if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
 							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()) {
 						
 					}
 					
-					//no matrix variable in two variable only at list one input variable
+					//no matrix variable in two variable only at list one input variable i.e real time variable
+				
+					//var1 are present in Changing.InputVariable and var2 are present in Changing.InputVariable
+					//or var1 are present in Changing.InputVariable and var2 is any number like '2'
+					//or var2 are present in Changing.InputVariable and var1 is any number like '2'
 					else if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
 									|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
 							&&(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
@@ -174,6 +180,10 @@ public class Equation {
 				}
 				
 				// / (Division) are come in small Equation 
+				// Ex. input= c+(b-(a/2))
+				//     small equation= a./2
+				//   In below loop the small equation is split from "/" and "a" and "2" is obtained 
+				//    and sent to the Division method to convert in c code which is yet to be done
 				else if(smallequation.indexOf("/")!=-1){
 					String[] var = smallequation.split("[\\/]");
 					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:\\*]");
@@ -258,6 +268,10 @@ public class Equation {
 				}*/
 				
 				// .* (Dot Multiplication) are come in small Equation 
+				// Ex. input= c+(b-(a.*2))
+				//     small equation= a./2
+				//   In below loop the small equation is split from ".*" and "a" and "2" is obtained 
+				//    and sent to the Dot Multiplication method to convert in c code which is yet to be done
 				else if(smallequation.indexOf(".*")!=-1) {
 					String[] var = smallequation.split("[\\*]");
 					//find variable one
@@ -328,7 +342,11 @@ public class Equation {
 					}
 				}
 				
-				// .* (Multiplication) are come in small Equation 
+				// * (Multiplication) are come in small Equation
+				// Ex. input= c+(b-(a*2))
+				//     small equation= a./2
+				//   In below loop the small equation is split from "*" and "a" and "2" is obtained 
+				//    and sent to the Multiplication method to convert in c code which is yet to be done
 				else if(smallequation.indexOf("*")!=-1) {
 					String[] var = smallequation.split("[\\*]");
 					//find variable one
@@ -397,6 +415,11 @@ public class Equation {
 						smallequation=smallequation.replaceFirst((var1+"[\\*]"+var2), Equation.AnsTemp);	
 					}
 				}
+				// + (Addition) are come in small Equation 
+				// Ex. input= c+(b-(a+2))
+				//     small equation= a./2
+				//   In below loop the small equation is split from "+" and "a" and "2" is obtained 
+				//    and sent to the Addition method to convert in c code which is yet to be done
 				else if(smallequation.indexOf("+")!=-1){
 					String[] var = smallequation.split("[\\+]");
 					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:]");
@@ -462,6 +485,11 @@ public class Equation {
 						smallequation=smallequation.replaceFirst((var1+"[\\+]"+var2), Equation.AnsTemp);	
 					}
 				}
+				// - (subtraction) are come in small Equation 
+				// Ex. input= c+(b-(a-2))
+				//     small equation= a./2
+				//   In below loop the small equation is split from "-" and "a" and "2" is obtained 
+				//    and sent to the subtraction method to convert in c code which is yet to be done
 				else if(smallequation.indexOf("-")!=-1){
 					String[] var = smallequation.split("[\\-]");
 					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:]");
@@ -545,7 +573,7 @@ public class Equation {
 			A=A.replaceAll("[\\)]", "[\\)]");
 			input=input.replaceFirst(A, smallequation.replaceAll("[()]", ""));
 		}
-		
+			// Equation.TempEquation are not null
 			if(Equation.TempEquation!=""){
 				
 				if(Pattern.compile(Equation.AnsTemp).matcher(Equation.TempEquation).find()) {
@@ -562,7 +590,7 @@ public class Equation {
 					Find.InputVariableCheck(input.split("=")[0],"varfxgggcb2$$$$$$$");
 				}
 			}
-			
+			// in equation real time variable are not present that time Equation.TempEquation are null
 			else{
 				
 				if(Pattern.compile("\\d+"+"_").matcher((input.split("=")[1]).replaceAll("\\.", "")).matches()){
