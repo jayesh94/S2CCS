@@ -15,17 +15,21 @@ public class Equation {
 		Equation.AnsTemp="";
 		String A;
 		
-		// while variable = variable/number are not remaining
+		// while variable = variable or number are not remaining
 		while(!Pattern.compile("(\\w*)(\\=*)(\\w*)").matcher(input.replaceAll("\\.", "")).matches()){
 			int lastindex = 0;
 			int index = 0;
 			String smallequation = null;
-			//Check the bracket in equation if find position of last bracket
+			
+			// Separating out the bracket to be solved first and saving in smallequation
+			// Ex. 12+(a-(2+var))
+			// smallequation = 2+var
+			//Check if bracket "(" is present in equation, if true then find position of last "(" bracket
 			while(input.indexOf('(', lastindex)!=-1){
 				index=input.indexOf('(', lastindex);
 				lastindex++;
 			}
-			//Separate the equation which is in bracket and create small equation
+			//Find position or index of ")" Separate the equation which is in brackets and create small equation
 			if(input.indexOf(')', lastindex)!=-1) {
 				lastindex=input.indexOf(')', lastindex);
 				smallequation= input.substring(index, lastindex+1 ) ;
@@ -38,10 +42,10 @@ public class Equation {
 				A = smallequation;
 			}
 			
-			//while small Equation is not equal to variable/number
+			//while smallequation is not equal to variable or number
 			while(!Pattern.compile("(\\w*)").matcher(smallequation.replaceAll("[()]", "").replaceAll("\\.", "")).matches()){
 				
-				// .^ (dot power) are come in small Equation 
+				// .^ (dot power) comes in small Equation 
 				if(smallequation.indexOf(".^")!=-1){
 					//Separate two variable in var1 and var2
 					String[] var = smallequation.split("[\\/]");
