@@ -174,6 +174,8 @@ public class Equation {
 						
 						Find.InputVariableCheck(var1,var2);
 						RealTimeEquation.VariableOne(var1, var2, "/");
+						//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f./55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\/]"+var2), Equation.AnsTemp);
 						
 					}
@@ -185,7 +187,8 @@ public class Equation {
 				//   In below loop the small equation is split from "/" and "a" and "2" is obtained 
 				//    and sent to the Division method to convert in c code which is yet to be done
 				else if(smallequation.indexOf("/")!=-1){
-					String[] var = smallequation.split("[\\/]");
+					String[] var = smallequation.split("[\\/]");//small equation are split by / and creat two variable
+											//ex. if small equation is a+v/55 then creat a+v and 55
 					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:\\*]");
 					String var1 = vartemp1[vartemp1.length-1];
 					String[] vartemp2 = var[1].split("[\\+\\-\\/\\^\\~\\=\\:\\*]");
@@ -202,14 +205,18 @@ public class Equation {
 					
 					// Variable one (var1) is matrix variable in two variables
 					else if(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.Initializevariable).find()){
-						
+					// var1, var2 and division sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for dviding matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"/");
+					//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f/55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\/]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					// Variable two (var2) is matrix variable in two variables
 					else if(Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.Initializevariable).find()){
-						
+					// var1, var2 and division sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for dviding matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"/");
+					//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f/55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\/]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
@@ -224,6 +231,8 @@ public class Equation {
 							&& Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find())){
 						
 						EquationSolver.TwoVarORNumber(var1, var2, "/");
+					//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f/55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\/]"+var2), Equation.AnsTemp);
 					}
 					
@@ -251,6 +260,8 @@ public class Equation {
 						
 						Find.InputVariableCheck(var1,var2);
 						RealTimeEquation.VariableOne(var1, var2, "/");
+					//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f/55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\/]"+var2), Equation.AnsTemp);		
 					}
 				}
@@ -273,7 +284,8 @@ public class Equation {
 				//   In below loop the small equation is split from ".*" and "a" and "2" is obtained 
 				//    and sent to the Dot Multiplication method to convert in c code which is yet to be done
 				else if(smallequation.indexOf(".*")!=-1) {
-					String[] var = smallequation.split("[\\*]");
+					String[] var = smallequation.split("[\\*]"); //small equation are split by .* and creat two variable
+											//ex. if small equation is a+v.*55 then creat a+v and 55
 					//find variable one
 					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:]");
 					String var1 = vartemp1[vartemp1.length-1].replaceAll("[\\.]", "");
@@ -286,16 +298,20 @@ public class Equation {
 					// variable one & variable two both are matrix
 					if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
 							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-						
+						// var1, var2 and Multiplication sign is sent to EquationSolver.TWOMatrixAddMulSubDiv for Multiplication of both matrices in c representation
 						EquationSolver.TWOMatrixAddMulSubDiv(var1, var2, "*");
+						//when both matrix Multiplication are representated according to c then ans of that Multiplication put into small equation and remove var1 and vae2 
+						//small equation =a+f.*55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\.\\*]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
 					// Variable one (var1) or Variable two (var2) is matrix variable in two variables
 					else if(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.Initializevariable).find()
 							|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.Initializevariable).find()){
-						
+					// var1, var2 and Multiplication sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for Multiplication matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"*");
+						//when both matrix Multiplication are representated according to c then ans of that Multiplication put into small equation and remove var1 and vae2 
+						//small equation =a+f.*55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\.\\*]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
@@ -310,6 +326,8 @@ public class Equation {
 							&& Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find())){
 						
 						EquationSolver.TwoVarORNumber(var1, var2, "*");
+					//when both matrix Multiplication are representated according to c then ans of that Multiplication put into small equation and remove var1 and vae2 
+					//small equation =a+f.*55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\*\\.]"+var2), Equation.AnsTemp);
 					}
 					
@@ -337,6 +355,8 @@ public class Equation {
 						
 						Find.InputVariableCheck(var1,var2);
 						RealTimeEquation.VariableOne(var1, var2, "*");
+					//when both matrix Multiplication are representated according to c then ans of that Multiplication put into small equation and remove var1 and vae2 
+					//small equation =a+f.*55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\*]"+var2), Equation.AnsTemp);
 							
 					}
@@ -347,8 +367,9 @@ public class Equation {
 				//     small equation= a./2
 				//   In below loop the small equation is split from "*" and "a" and "2" is obtained 
 				//    and sent to the Multiplication method to convert in c code which is yet to be done
-				else if(smallequation.indexOf("*")!=-1) {
-					String[] var = smallequation.split("[\\*]");
+				else if(smallequation.indexOf("*")!=-1) {  
+					String[] var = smallequation.split("[\\*]"); //small equation are split by * and creat two variable
+											//ex. if small equation is a+v*55 then creat a+v and 55
 					//find variable one
 					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:\\*]");
 					String var1 = vartemp1[vartemp1.length-1];
@@ -360,16 +381,20 @@ public class Equation {
 					// variable one & variable two both are matrix
 					if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
 							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-						
+						// var1, var2 and Multiplication sign is sent to EquationSolver.TWOMatrixAddMulSubDiv for Multiplication of both matrices in c representation
 						EquationSolver.TwoMatrixMultiplication(var1, var2);
+						//when both matrix Multiplication are representated according to c then ans of that Multiplication put into small equation and remove var1 and vae2 
+						//small equation =a+f*55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1.replaceAll("[()]", "")+"[\\*]"+var2.replaceAll("[()]", "")), Equation.AnsTemp);
 					}
 					
 					// Variable one (var1) or Variable two (var2) is matrix variable in two variables
 					else if(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()
 							|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()){
-						
+						// var1, var2 and Multiplication sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for Multiplication matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"*");
+						//when both matrix Multiplication are representated according to c then ans of that Multiplication put into small equation and remove var1 and vae2 
+						//small equation =a+f*55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\*]"+var2), Equation.AnsTemp);
 					}
 					
@@ -384,6 +409,8 @@ public class Equation {
 								&& Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find())){
 						
 						EquationSolver.TwoVarORNumber(var1, var2, "*");
+						//when Multiplication are representated according to c then ans of that Multiplication put into small equation and remove var1 and vae2 
+						//small equation =a+f*55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\*]"+var2), Equation.AnsTemp);
 
 					}
@@ -412,6 +439,8 @@ public class Equation {
 						
 						Find.InputVariableCheck(var1,var2);
 						RealTimeEquation.VariableOne(var1, var2, "*");
+						//when Multiplication are representated according to c then ans of that Multiplication put into small equation and remove var1 and vae2 
+						//small equation =a+f*55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\*]"+var2), Equation.AnsTemp);	
 					}
 				}
@@ -421,7 +450,8 @@ public class Equation {
 				//   In below loop the small equation is split from "+" and "a" and "2" is obtained 
 				//    and sent to the Addition method to convert in c code which is yet to be done
 				else if(smallequation.indexOf("+")!=-1){
-					String[] var = smallequation.split("[\\+]");
+					String[] var = smallequation.split("[\\+]"); //small equation are split by + and creat two variable
+											//ex. if small equation is a+v+55 then creat a+v and 55
 					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:]");
 					String var1 = vartemp1[vartemp1.length-1];
 					String[] vartemp2 = var[1].split("[\\+\\-\\/\\^\\~\\=\\:]");
@@ -431,15 +461,17 @@ public class Equation {
 					// variable one & variable two both are matrix
 					if (Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
 							&&Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-						
+						// var1, var2 and Addition sign is sent to EquationSolver.TWOMatrixAddMulSubDiv for Addition of both matrices in c representation
 						EquationSolver.TWOMatrixAddMulSubDiv(var1.replaceAll("[()]", ""), var2.replaceAll("[()]", ""), "+");
+						//when both matrix Multiplication are representated according to c then ans of that Multiplication put into small equation and remove var1 and vae2 
+						//small equation =a+f.*55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\+]"+var2), Equation.AnsTemp);
 					}
 					
 					// Variable one (var1) or Variable two (var2) is matrix variable in two variables
 					else if(Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()
 							|| Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()){
-						
+						// var1, var2 and Addition sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for Addition matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"+");
 						smallequation=smallequation.replaceFirst((var1+"[\\+]"+var2), Equation.AnsTemp);
 					}
@@ -491,7 +523,8 @@ public class Equation {
 				//   In below loop the small equation is split from "-" and "a" and "2" is obtained 
 				//    and sent to the subtraction method to convert in c code which is yet to be done
 				else if(smallequation.indexOf("-")!=-1){
-					String[] var = smallequation.split("[\\-]");
+					String[] var = smallequation.split("[\\-]");  //small equation are split by - and creat two variable
+											//ex. if small equation is a+v-55 then creat a+v and 55
 					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:]");
 					String var1 = vartemp1[vartemp1.length-1];
 					String[] vartemp2 = var[1].split("[\\+\\-\\/\\^\\~\\=\\:]");
@@ -501,21 +534,22 @@ public class Equation {
 					// variable one & variable two both are matrix
 					if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
 							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-						
+					// var1, var2 and subtraction sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for subtraction of both matrices in c representation	
 						EquationSolver.TWOMatrixAddMulSubDiv(var1, var2, "-");
 						smallequation=smallequation.replaceFirst((var1+"[\\-]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
 					// Variable one (var1) is matrix variable in two variables
 					else if(Pattern.compile("$"+var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d+)(\\])").matcher(Changing.matrixVariable).find()){
-						
+					
+					// var1, var2 and subtraction sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for subtraction  of matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"-");
 						smallequation=smallequation.replaceFirst((var1+"[\\-]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
 					// Variable two (var2) is matrix variable in two variables
 					else if(Pattern.compile("$"+var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d+)(\\])").matcher(Changing.matrixVariable).find()){
-						
+						// var1, var2 and subtraction sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for subtraction  of matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"-");
 						smallequation=smallequation.replaceFirst((var1+"[\\-]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
