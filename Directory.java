@@ -1,8 +1,8 @@
 
-/*This class contains all the default header files, global variables and functions required to initialise the C5515 usb stk.
-
-This class is created with an intention of adding default programs for initialization of other dsp kits, which is to be addded*/
-
+/*This class contains all the default header files, global variables and functions required to initialise the C5515 usb stk for now.
+This class is created with an intention of adding default programs for initialization of other dsp kits. These initialization codes
+of respective kits will be selected and stored to corresponding strings in Changing class before appending with the main program. */
+// The initialization programs for other dsp kits are still to be written.
 package Main;
 
 public class Directory {
