@@ -1,5 +1,7 @@
-package Main;
 
+/*Here MainProgram is used to store the converted code at the steps of code detection in MainGrammar.jj*/
+
+package Main;
 
 public class Changing {
 	public static int index;
@@ -24,8 +26,8 @@ public class Changing {
 	
 	public static String Ending ="}";
 	public static String variablevalue ="$";
-	public static String InputVariable="$";
-	public static String matrixVariable="$";
+	public static String InputVariable="$"; // used for checking initialization of variables
+	public static String matrixVariable="$"; // workspace of variables defining matrix 
 	public static String InputOutputVariable="$";
 			
 }
