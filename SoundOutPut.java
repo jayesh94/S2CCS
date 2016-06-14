@@ -31,7 +31,7 @@ public class SoundOutPut {
 			}
 			
 			else if(Pattern.compile("(\\w*)").matcher(result[1]).matches()) {
-				
+			// TODO if variable value is present instead of a frequency number	
 			}
 		}
 		
@@ -53,24 +53,29 @@ public class SoundOutPut {
     			Changing.Initializevariable= Changing.Initializevariable.replaceAll("int "+result[0]+"\\[1\\]=\\{\\};", "");
     		}
 			
-		//Checking further occurrence of a= OR a[
+		//Checking further occurrence of a=[] i.e check in main program the occurrence of transmitting variable and it is representated according to DSP
     		while ((Changing.MainProgram.indexOf(result[0]+"=" , lastindex))!=-1 || (Changing.MainProgram.indexOf(result[0]+"[" , lastindex))!=-1) {
-
-    					if((Changing.MainProgram.indexOf(result[0]+"[" , lastindex))!=-1){
+					//check in main program the position of the variable which is transmitting it represented as Ex. a=44 or a[5][5]={76 9}
+    					if((Changing.MainProgram.indexOf(result[0]+"[" , lastindex))!=-1){ 
+    						//find the index of that variable and separate it
     						index = Changing.MainProgram.indexOf(result[0]+"[" , lastindex);
+    						
     						removingvariable = Changing.MainProgram.substring(index+result[0].length()+1, Changing.MainProgram.indexOf("]",index) );
     					}
     					else{
     						index = Changing.MainProgram.indexOf(result[0]+"=" , lastindex);
     					}
-    					 
+    					
+    					// find the last index of that variable
     					lastindex= Changing.MainProgram.indexOf("\n",index);
+    					// and this whole line will be cropped
     					String temp = Changing.MainProgram.substring(index, lastindex );
     					String[] string2 = (temp).split(";");
     					
-    					//checking whether a=[a s]
+    					//checking whether a[i]=s is present or not if present it will be replace with transmit(s)
     					if (string2[0].trim().matches(result[0]+"\\["+"(\\w*)"+"(\\])"+"( = )"+"(.*)")) {
     						
+    						// separate the 's' from a[i]=s
     						string2[0]=string2[0].replaceAll(result[0]+"(=)(\\{)"+result[0]+"(.*)(\\})", "$3").trim();
     						string2[0]=string2[0].split("=")[1];
     						
@@ -91,6 +96,7 @@ public class SoundOutPut {
     						}
     					}
     					
+    					//if a=500 or a=g is present then it will be represented as transmit(500) or transmit(g)
     					else if (string2[0].matches(result[0]+"(=)(.*)")) {
     						
     						string2[0]=string2[0].replaceAll(",", "");
@@ -101,7 +107,8 @@ public class SoundOutPut {
     				}
     	}
 		
-		Changing.HeaderFile=Changing.HeaderFile+"\n"+Directory.HeaderFile;
+		//we include all header, GlobleVariable and required function into main program
+		Changing.HeaderFile=Changing.HeaderFile+"\n"+Directory.HeaderFile; 
 		Changing.Initializevariable=Changing.Initializevariable+"\n"+Directory.Initializevariable;
 		Changing.GlobleVariable = Changing.GlobleVariable +"\n"+Directory.GlobleVariable+ "\n" + "void transmit(Int16 a);";
 		Changing.Function=Changing.Function + "\n" +Directory.Function;
@@ -113,7 +120,7 @@ public class SoundOutPut {
 				"}";
 		
 		
-		return (null);//ggg
+		return (null);
 		
 		
 		
