@@ -66,9 +66,9 @@ public class SoundOutPut {
     					//and this whole line will be croap
     					String temp = Changing.MainProgram.substring(index, lastindex );
     					String[] string2 = (temp).split(";");
-    					//checking whether a=[a s] are present or not
+    					//checking whether a[i]=s are present or not if present it will be replace with transmit(s)
     					if (string2[0].trim().matches(result[0]+"\\["+"(\\w*)"+"(\\])"+"( = )"+"(.*)")) {
-    						
+    						// seperat the 's' from a[i]=s
     						string2[0]=string2[0].replaceAll(result[0]+"(=)(\\{)"+result[0]+"(.*)(\\})", "$3").trim();
     						string2[0]=string2[0].split("=")[1];
     						
@@ -88,7 +88,7 @@ public class SoundOutPut {
     							+ Changing.MainProgram.substring(lastindex, Changing.MainProgram.length() ) ;
     						}
     					}
-    					
+    					//if only a=500 or a=g are present then ti will be represented as transmit(500) or transmit(g)
     					else if (string2[0].matches(result[0]+"(=)(.*)")) {
     						
     						string2[0]=string2[0].replaceAll(",", "");
@@ -98,8 +98,8 @@ public class SoundOutPut {
     					}
     				}
     	}
-		
-		Changing.HeaderFile=Changing.HeaderFile+"\n"+Directory.HeaderFile;
+		//we include all header, GlobleVariable and required function into main program
+		Changing.HeaderFile=Changing.HeaderFile+"\n"+Directory.HeaderFile; 
 		Changing.Initializevariable=Changing.Initializevariable+"\n"+Directory.Initializevariable;
 		Changing.GlobleVariable = Changing.GlobleVariable +"\n"+Directory.GlobleVariable+ "\n" + "void transmit(Int16 a);";
 		Changing.Function=Changing.Function + "\n" +Directory.Function;
