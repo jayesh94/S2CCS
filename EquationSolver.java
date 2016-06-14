@@ -216,7 +216,7 @@ public class EquationSolver {
 		}
 	}
 	
-	//TODO remove the solving process 
+	//TODO remove the solving process only replace the equation according to the c and dsp
 	public static Object TwoVarORNumber(String var1 , String var2 , String Operator) {
 		String var11 = null;
 		String var22 = null;
