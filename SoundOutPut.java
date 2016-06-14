@@ -51,20 +51,22 @@ public class SoundOutPut {
 			
 			//Checking further occurrence of a=[] i.e cheack in main program the occurrence of transmitating variable and it representated according to DSP
     		while ((Changing.MainProgram.indexOf(result[0]+"=" , lastindex))!=-1 || (Changing.MainProgram.indexOf(result[0]+"[" , lastindex))!=-1) {
-					//cheack in main program the position of the variable which is transmiting 
+					//cheack in main program the position of the variable which is transmiting it representated as only a=44 or a[5][5]={76 9}
     					if((Changing.MainProgram.indexOf(result[0]+"[" , lastindex))!=-1){ 
-    						//find the index of that variable
+    						//find the index of that variable and seperat it
     						index = Changing.MainProgram.indexOf(result[0]+"[" , lastindex);
+    						
     						removingvariable = Changing.MainProgram.substring(index+result[0].length()+1, Changing.MainProgram.indexOf("]",index) );
     					}
     					else{
     						index = Changing.MainProgram.indexOf(result[0]+"=" , lastindex);
     					}
-    					 
+    					 //find the last index of that variable
     					lastindex= Changing.MainProgram.indexOf("\n",index);
+    					//and this whole line will be croap
     					String temp = Changing.MainProgram.substring(index, lastindex );
     					String[] string2 = (temp).split(";");
-    					//checking whether a=[a s]
+    					//checking whether a=[a s] are present or not
     					if (string2[0].trim().matches(result[0]+"\\["+"(\\w*)"+"(\\])"+"( = )"+"(.*)")) {
     						
     						string2[0]=string2[0].replaceAll(result[0]+"(=)(\\{)"+result[0]+"(.*)(\\})", "$3").trim();
