@@ -1,3 +1,11 @@
+
+/*This class is being called when a sum() is detected in MainGrammar.jj, called as Equation.matrix. The sum obtained is converted 
+according to priority of brackets. Ex. sum = a+(12*b(2+a)) then small equation = 2+a
+Here the type variables are being detected on wich arithmetic operation is being done. var1=2 and var2= a
+We are checking whether the variables var1 and var2 are numbers, matrices, arrays or input variable(real time variables)
+Based on the type of variable detected the class EquationSolver is  called to perform the desired conversion in c language.
+The arithmetic operation between the variables are recognised and send to EquationSolver for respective convertion of code.*/
+
 package Main;
 
 import java.util.regex.Pattern;
@@ -60,8 +68,8 @@ public class Equation {
 					String[] vartemp2 = var[1].split("[\\+\\-\\/\\^\\~\\=\\:]");
 					String var2 = vartemp2[0];
 					smallequation=smallequation.replaceAll(var1+"[\\/]"+var2, "A");
-					A=A.replaceAll("[\\.]", "[\\.]");
-					A=A.replaceAll("[\\^]", "[\\^]");		
+					A=A.replaceAll("[\\.]", "[\\.]");// replace "." with "\\."
+					A=A.replaceAll("[\\^]", "[\\^]");// replace "^" with "\\^"		
 				}
 				
 				// ^ (power) are come in small Equation
@@ -99,7 +107,7 @@ public class Equation {
 					// Variable one & variable two both are matrix
 					if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
 							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-						// var1, var2 and division sign is sent to EquationSolver.TWOMatrixAddMulSubDiv for dviding both matrices in c representation
+						// var1, var2 and division sign is sent to EquationSolver.TWOMatrixAddMulSubDiv for dividing both matrices in c representation
 						EquationSolver.TWOMatrixAddMulSubDiv(var1, var2, "/");
 						//when both matrix divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
 						//small equation =a+f./55 then it changes to a+ans 
@@ -158,7 +166,7 @@ public class Equation {
 						
 					}
 					
-					//no matrix variable in two variable only at list one input variable i.e real time variable
+					//no matrix variable in two variable only at least one input variable i.e real time variable
 				
 					//var1 are present in Changing.InputVariable and var2 are present in Changing.InputVariable
 					//or var1 are present in Changing.InputVariable and var2 is any number like '2'
