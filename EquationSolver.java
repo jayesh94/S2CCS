@@ -12,14 +12,14 @@ public class EquationSolver {
 		String var11 = null;
 		String var22 = null;
 		//finding the size of both matrix variable 
-		//hence we first find the index of that var1 in the matrixvariable and crop it and stor in the var11 
+		 //hence we first find the index of that var1 in the matrixvariable and crop it and store in the var11
 		int index = (Changing.matrixVariable.indexOf("$"+var1.replaceAll("[()]", "")+"["))+1;
 		var11 = Changing.matrixVariable.substring(index, Changing.matrixVariable.indexOf("$",index)) ;
 		//if the array are in var1 then it stor like (a[2]={5 5} ) but we required in matrix form (a[1][2]={5 5} )
 		if (!Pattern.compile(var1.replaceAll("[()]", "")+"(\\[)(\\d*)(\\])"+"(\\[)(\\d*)(\\])").matcher(var11).find()) {
 			var11=var11.split("[\\=\\[\\]]")[0]+"[1]"+"["+var11.split("[\\=\\[\\]]")[1]+"]"+"="+var11.split("[\\=\\[\\]]")[3];
 		}
-	    //then find the index of that var2 in the matrixvariable and crop it and stor in the var22 
+	     //then find the index of that var2 in the matrix variable and crop it and store in the var 22
 	    index=(Changing.matrixVariable.indexOf("$"+var2.replaceAll("[()]", "")+"["))+1;
 	    var22 = Changing.matrixVariable.substring(index, Changing.matrixVariable.indexOf("$",index)) ;
 	    //if the array are in var2 then it stor like (a[2]={5 5} ) but we required in matrix form (a[1][2]={5 5} )
@@ -30,15 +30,15 @@ public class EquationSolver {
 	    String[] mANDn1 = (var11).split("[\\[\\]]"); //in mANDn1 a[1][2] are split and at mANDn1[1]  mANDn1[3] are created
 	    String[] mANDn2 = (var22).split("[\\[\\]]");  //in mANDn2 a[1][2] are split and at mANDn2[1]  mANDn2[3] are created
 	    
-	    //if matrix size are not match
+	    //if matrix size is not match
 	    if(Integer.parseInt(mANDn1[3]) != Integer.parseInt(mANDn2[1])) {
 	    	//TODO error 
 	    }
-	    	//create a temp variable for storing the ans of two matrix mulyiplication 
+	    	//create a temp variable for storing the ans and of two matrix multiplication
 		String ans = Find.CreateVariable("ans", "matrixVariable");
 		Find.FindInitializevariable(ans+"["+mANDn1[1]+"]"+"["+mANDn2[3]+"]", "Int16"); //define the size of temp variable
 		
-		Changing.matrixVariable=Changing.matrixVariable+ans+"["+mANDn1[1]+"]"+"["+mANDn2[3]+"]"+"$"; //stor the temp veriable in Changing.matrixVariable with its size
+		Changing.matrixVariable=Changing.matrixVariable+ans+"["+mANDn1[1]+"]"+"["+mANDn2[3]+"]"+"$"; //store the temp veriable in Changing.matrixVariable with its size
 		Equation.AnsTemp=ans; // after two matrix multiplication it is stored into a variable which is stored to AnsTemp of equation class.
 		String i = Find.CreateVariable("i", "variablevalue"); //create a local variable i for matrix multiplication (for creation of for loop)
 		String j = Find.CreateVariable("j", "variablevalue"); //create a local variable j for matrix multiplication (for creation of for loop)
@@ -93,11 +93,11 @@ public class EquationSolver {
 			//find size of the temp ans variable which created for other calculation 
 			String[] mANDn = ((Equation.TempEquation.substring(index, Equation.TempEquation.indexOf(";",index))).split("=")[0]).split("[\\[\\]]") ; 
 			
-			//Variable 1 are matrix variable
+			//Variable 1 are matrix variable i.e var1 are matrix variable
 			if(Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-				//in Equation.TempEquation split all lne seperately  and stored into the mul
+				//in Equation.TempEquation split all lines separately and stored into the mul
 				String[] mul=Equation.TempEquation.split("[\\n]");
-				int length=mul.length; //find no of line 
+				int length=mul.length; //find no of lines 
 				//ex. a=array1+array2
 				// code in TempEquation
 				//for (i = 0; i < m; i++)
@@ -117,11 +117,11 @@ public class EquationSolver {
 				else{
 					
 					mul[length-3]=mul[length-3].split(";")[0]; //remove the ; from 3rd last line
-					mul[length-3]=mul[length-3]+Operator+var2+bracket2+";";  //then add new operation and ;
+					mul[length-3]=mul[length-3]+Operator+var2+bracket2+";";  //then add new operation and ';'
 				}
 				
 				Equation.TempEquation="";
-				//aal lines in mul add again into Equation.TempEquation
+				//all lines in mul add again into Equation.TempEquation
 				for (String temp:mul) {
 					Equation.TempEquation=Equation.TempEquation+temp+"\n";
 				}
@@ -129,9 +129,9 @@ public class EquationSolver {
 			
 			//Variable 2 are matrix variable i.e var2 are matrix variable
 			if(Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-				//in Equation.TempEquation split all lne seperately  and stored into the mul
+				//in Equation.TempEquation split all lines separately  and stored into the mul
 				String[] mul=Equation.TempEquation.split("[\\n]");
-				int length=mul.length;//find no of line 
+				int length=mul.length;//find no of lines 
 				//ex. a=array1+array2
 				// code in TempEquation
 				//for (i = 0; i < m; i++)
@@ -152,7 +152,7 @@ public class EquationSolver {
 				}
 				
 				Equation.TempEquation="";
-				//aal lines in mul add again into Equation.TempEquation
+				//all lines in mul add again into Equation.TempEquation
 				for (String temp:mul) {
 					Equation.TempEquation=Equation.TempEquation+temp+"\n";
 				}
@@ -164,7 +164,7 @@ public class EquationSolver {
 			//Variable 1 are matrix variable i.e var1 are matrix variable
 			if(Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
 				//finding the size of matrix variable 
-				//hence we first find the index of that var1 in the matrixvariable and crop it and stor in the var11 
+				//hence we first find the index of that var1 in the matrixvariable and crop it and stored in the var11 
 				index = (Changing.matrixVariable.indexOf("$"+var1.replaceAll("[()]", "")+"["))+1;
 				var11 = Changing.matrixVariable.substring(index, Changing.matrixVariable.indexOf("$",index)) ;
 				//if the array are in var1 then it stor like (a[2]={5 5} ) but we required in matrix form (a[1][2]={5 5} )
@@ -178,7 +178,7 @@ public class EquationSolver {
 				String ans = Find.CreateVariable("ans", "matrixVariable");
 				Find.FindInitializevariable(ans+"["+mANDn1[1]+"]"+"["+mANDn1[3]+"]", "Int16");//define the size of temp variable and Initialize
 				
-				Changing.matrixVariable=Changing.matrixVariable+ans+"["+mANDn1[1]+"]"+"["+mANDn1[3]+"]"+"$";//stor the temp veriable in Changing.matrixVariable with its size
+				Changing.matrixVariable=Changing.matrixVariable+ans+"["+mANDn1[1]+"]"+"["+mANDn1[3]+"]"+"$";//store the temp veriable in Changing.matrixVariable with its size
 				Equation.AnsTemp=ans;// after matrix operation it is stored into a variable which is stored to AnsTemp of equation class.
 				String i = Find.CreateVariable("i", "variablevalue");//create a local variable i for matrix operation (for creation of for loop)
 				String j = Find.CreateVariable("j", "variablevalue");//create a local variable j for matrix operation (for creation of for loop)
@@ -190,7 +190,7 @@ public class EquationSolver {
 			//Variable 2 are matrix variable i.e var2 are matrix variable
 			else {
 				//finding the size of matrix variable 
-				//hence we first find the index of that var2 in the matrixvariable and crop it and stor in the var22 
+				//hence we first find the index of that var2 in the matrixvariable and crop it and store in the var22 
 				index = (Changing.matrixVariable.indexOf("$"+var2.replaceAll("[()]", "")+"["))+1;
 				var22 = Changing.matrixVariable.substring(index, Changing.matrixVariable.indexOf("$",index)) ;
 				//if the array are in var1 then it stor like (a[2]={5 5} ) but we required in matrix form (a[1][2]={5 5} )
@@ -203,7 +203,7 @@ public class EquationSolver {
 				String ans = Find.CreateVariable("ans", "matrixVariable");
 				Find.FindInitializevariable(ans+"["+mANDn2[1]+"]"+"["+mANDn2[3]+"]", "Int16");//define the size of temp variable and Initialize
 				
-				Changing.matrixVariable=Changing.matrixVariable+ans+"["+mANDn2[1]+"]"+"["+mANDn2[3]+"]"+"$";//stor the temp veriable in Changing.matrixVariable with its size
+				Changing.matrixVariable=Changing.matrixVariable+ans+"["+mANDn2[1]+"]"+"["+mANDn2[3]+"]"+"$";//store the temp veriable in Changing.matrixVariable with its size
 				Equation.AnsTemp=ans;
 				String i = Find.CreateVariable("i", "variablevalue");//create a local variable i for matrix operation (for creation of for loop)
 				String j = Find.CreateVariable("j", "variablevalue");//create a local variable j for matrix operation (for creation of for loop)
@@ -216,7 +216,7 @@ public class EquationSolver {
 		}
 	}
 	
-	
+	//TODO remove the solving process 
 	public static Object TwoVarORNumber(String var1 , String var2 , String Operator) {
 		String var11 = null;
 		String var22 = null;
