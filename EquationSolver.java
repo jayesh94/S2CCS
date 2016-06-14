@@ -132,16 +132,27 @@ public class EquationSolver {
 				//in Equation.TempEquation split all lne seperately  and stored into the mul
 				String[] mul=Equation.TempEquation.split("[\\n]");
 				int length=mul.length;//find no of line 
+				//ex. a=array1+array2
+				// code in TempEquation
+				//for (i = 0; i < m; i++)
+				//{
+				//for (j = 0; j < n; j++)
+				//{
+				//ans[i][j] = array1[i][j] + array2[i][j];
+				//}
+				//}
 				
+				//ans[i][j] = array1[i][j] + array2[i][j] is not present at 3rd last line then it will be add and also new operation will be added
 				if(Pattern.compile("(\\W*)").matcher(mul[length-3]).matches()){
 					mul[length-3]=mul[length-3]+"\n"+var1+"["+mANDn[1]+"]"+"["+mANDn[3]+"]"+"="+bracket1+var1+"["+mANDn[1]+"]"+"["+mANDn[3]+"]"+Operator+var2+bracket2+";";
 				}
-				
+				//array0[i][j]=array0[j][i] are present at 3rd last line then only add new operation
 				else{
 					mul[length-3]=mul[length-3].split("=")[0]+"="+bracket1+var1+Operator+mul[length-3].split("=")[1];
 				}
 				
 				Equation.TempEquation="";
+				//aal lines in mul add again into Equation.TempEquation
 				for (String temp:mul) {
 					Equation.TempEquation=Equation.TempEquation+temp+"\n";
 				}
