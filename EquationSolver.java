@@ -27,27 +27,26 @@ public class EquationSolver {
 	    	var22=var22.split("[\\=\\[\\]]")[0]+"[1]"+"["+var22.split("[\\=\\[\\]]")[1]+"]"+"="+var22.split("[\\=\\[\\]]")[3];
 		}
 	    //size of matrix which is in var1 and var2 are stored in mANDn1 and mANDn2
-	    String[] mANDn1 = (var11).split("[\\[\\]]"); //
-	    String[] mANDn2 = (var22).split("[\\[\\]]");
+	    String[] mANDn1 = (var11).split("[\\[\\]]"); //in mANDn1 a[1][2] are split and at mANDn1[1]  mANDn1[3] are created
+	    String[] mANDn2 = (var22).split("[\\[\\]]");  //in mANDn2 a[1][2] are split and at mANDn2[1]  mANDn2[3] are created
 	    
 	    //if matrix size are not match
 	    if(Integer.parseInt(mANDn1[3]) != Integer.parseInt(mANDn2[1])) {
 	    	//TODO error 
 	    }
-	    
+	    	//create a temp variable for storing the ans of two matrix mulyiplication 
 		String ans = Find.CreateVariable("ans", "matrixVariable");
-		Find.FindInitializevariable(ans+"["+mANDn1[1]+"]"+"["+mANDn2[3]+"]", "Int16");
+		Find.FindInitializevariable(ans+"["+mANDn1[1]+"]"+"["+mANDn2[3]+"]", "Int16"); //define the size of temp variable
 		
-		Changing.matrixVariable=Changing.matrixVariable+ans+"["+mANDn1[1]+"]"+"["+mANDn2[3]+"]"+"$";
-		Equation.AnsTemp=ans; // after two matrix multiplication it is stored into a
-							  // variable which is stored to AnsTemp of equation class.
-		String i = Find.CreateVariable("i", "variablevalue");
-		String j = Find.CreateVariable("j", "variablevalue");
-		String k = Find.CreateVariable("k", "variablevalue");
+		Changing.matrixVariable=Changing.matrixVariable+ans+"["+mANDn1[1]+"]"+"["+mANDn2[3]+"]"+"$"; //stor the temp veriable in Changing.matrixVariable with its size
+		Equation.AnsTemp=ans; // after two matrix multiplication it is stored into a variable which is stored to AnsTemp of equation class.
+		String i = Find.CreateVariable("i", "variablevalue"); //create a local variable i for matrix multiplication (for creation of for loop)
+		String j = Find.CreateVariable("j", "variablevalue"); //create a local variable j for matrix multiplication (for creation of for loop)
+		String k = Find.CreateVariable("k", "variablevalue"); //create a local variable k for matrix multiplication (for creation of for loop)
 		
-		var1=var1.replaceAll("[()]", "");
-		var2=var2.replaceAll("[()]", "");
-		
+		var1=var1.replaceAll("[()]", ""); //remove the bracket from var1
+		var2=var2.replaceAll("[()]", ""); //remove the bracket from var2
+		//change the equation representation according to c and stored into the Equation.TempEquation
 		Equation.TempEquation=Equation.TempEquation + "for ("+i+" = 0; "+i+" < "+ mANDn1[1] +"; "+i+"++)\n{\n" +
 				"for ("+j+" = 0; "+j+" < "+ mANDn2[3] +"; "+j+"++)\n{\n" +
 						ans+"["+i+"]["+j+"] = 0;\n" +
@@ -68,7 +67,7 @@ public class EquationSolver {
 		int index;
 		String bracket1="";
 		String bracket2="";
-		//removing bracket from variable and store in another variable
+		//removing bracket from variable and store in another temp variable like bracket1 and bracket2
 		if(var1.contains("(")) {
 			var1=var1.replaceAll("[()]", "");
 			bracket1="(";
@@ -85,26 +84,36 @@ public class EquationSolver {
 			var2=var2.replaceAll("[()]", "");
 			bracket2=")";
 		}
-
+		
 		if(Pattern.compile("\\$"+Equation.AnsTemp+"(\\[)(\\d+)(\\])").matcher(Changing.matrixVariable).find()
 				&& (Pattern.compile(Equation.AnsTemp).matcher(var1.replaceAll(" ","").replaceAll("[()]", "")).matches()
 						||Pattern.compile(Equation.AnsTemp).matcher(var2.replaceAll(" ","").replaceAll("[()]", "")).matches())) {
 			
-			index=Equation.TempEquation.lastIndexOf("{");
-			String[] mANDn = ((Equation.TempEquation.substring(index, Equation.TempEquation.indexOf(";",index))).split("=")[0]).split("[\\[\\]]") ;
+			index=Equation.TempEquation.lastIndexOf("{");  //find the last for loop index which present in to the Equation.TempEquation
+			//find size of the temp ans variable which created for other calculation 
+			String[] mANDn = ((Equation.TempEquation.substring(index, Equation.TempEquation.indexOf(";",index))).split("=")[0]).split("[\\[\\]]") ; 
 			
-			//Variable 1 are matrix
+			//Variable 1 are matrix variable
 			if(Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-				
+				//in Equation.TempEquation split all lne seperately  and stored into the mul
 				String[] mul=Equation.TempEquation.split("[\\n]");
-				int length=mul.length;
+				int length=mul.length; //find no of line 
+				//ex. a=array1+array2
+				// code in TempEquation
+				//for (i = 0; i < m; i++)
+				//{
+				//for (j = 0; j < n; j++)
+				//{
+				//ans[i][j] = array1[i][j] + array2[i][j];
+				//}
+				//}
 				
-				//array0[i][j]=array0[j][i] are not available
+				//ans[i][j] = array1[i][j] + array2[i][j] is not available at 
 				if(Pattern.compile("(\\W*)").matcher(mul[length-3]).matches()){
 					
 					mul[length-3]=mul[length-3]+"\n"+var1+"["+mANDn[1]+"]"+"["+mANDn[3]+"]"+"="+bracket1+var1+"["+mANDn[1]+"]"+"["+mANDn[3]+"]"+Operator+var2+bracket2+";";
 				}
-				//array0[i][j]=array0[j][i] are not available
+				//array0[i][j]=array0[j][i] are available
 				else{
 					
 					mul[length-3]=mul[length-3].split(";")[0];
@@ -118,7 +127,7 @@ public class EquationSolver {
 				}
 			}
 			
-			//Variable 2 are matrix
+			//Variable 2 are matrix variable
 			if(Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
 				
 				String[] mul=Equation.TempEquation.split("[\\n]");
@@ -139,7 +148,7 @@ public class EquationSolver {
 			}
 		}
 		
-		//for loop are not created
+		//for loop are not created in Equation.TempEquation
 		else {
 			
 			if(Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
