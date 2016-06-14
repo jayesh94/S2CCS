@@ -4,7 +4,9 @@ according to priority of brackets. Ex. sum = a+(12*b(2+a)) then small equation =
 Here the type variables are being detected on wich arithmetic operation is being done. var1=2 and var2= a
 We are checking whether the variables var1 and var2 are numbers, matrices, arrays or input variable(real time variables)
 Based on the type of variable detected the class EquationSolver is  called to perform the desired conversion in c language.
-The arithmetic operation between the variables are recognised and send to EquationSolver for respective convertion of code.*/
+The arithmetic operation between the variables are recognised and send to EquationSolver for respective convertion of code.
+When there is any arithmetic operation on input variable (real time equation) RealTimeEquation.VariableOne is called for the purpose 
+of covnersion in c language. */
 
 package Main;
 
