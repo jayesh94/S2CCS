@@ -1,3 +1,6 @@
+
+/*This class is called when there is any operation on input variable (real time variable) for the purpose of conversion in c language*/
+
 package Main;
 
 import java.util.regex.Pattern;
@@ -7,17 +10,21 @@ public class RealTimeEquation {
 	public static void VariableOne(String var1 , String var2 , String Operator) {
 		String var11 = null;
 		String var22 = null;
-		//in the input variable all real time variable are store with its temporary answer like ex.and= e+78
-// hence it will bee cropped and stored in car11
+		
+		//Here in the input variable all real time variables are store with its temporary answer like ex. "ans= e+78" and var1 has "ans"
+		// hence it will be cropped and stored in var11
+		
+		// if var1 is present in Changing.InputVariable 
 		if(Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")+"=").matcher(Changing.InputVariable).find()) {
 			
 			int index = (Changing.InputVariable.indexOf("$"+var1.replaceAll("[()]", "")))+1;
-			var11 = Changing.InputVariable.substring(index, Changing.InputVariable.indexOf("$",index)).split("=")[1] ;
+			var11 = Changing.InputVariable.substring(index, Changing.InputVariable.indexOf("$",index)).split("=")[1] ;// var11= e+78
 		}
 		
-		else{   // if this variable not in input variable then var11= var1
+		else{   // if this variable not in input variable then var11= var1 
 			var11=var1;
 		}
+		
 		//if the variable in var11 is also in temp variable then it is temporary hence it will be removed
 		if (Pattern.compile("\\$"+var11.replaceAll(" ","").replaceAll("[()]", "")).matcher(Equation.tempvariable).find()) {
 			
