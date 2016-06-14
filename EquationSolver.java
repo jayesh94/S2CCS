@@ -12,21 +12,22 @@ public class EquationSolver {
 		String var11 = null;
 		String var22 = null;
 		//finding the size of both matrix variable 
+		//hence we first find the index of that var1 in the matrixvariable and crop it and stor in the var11 
 		int index = (Changing.matrixVariable.indexOf("$"+var1.replaceAll("[()]", "")+"["))+1;
 		var11 = Changing.matrixVariable.substring(index, Changing.matrixVariable.indexOf("$",index)) ;
-		
+		//if the array are in var1 then it stor like (a[2]={5 5} ) but we required in matrix form (a[1][2]={5 5} )
 		if (!Pattern.compile(var1.replaceAll("[()]", "")+"(\\[)(\\d*)(\\])"+"(\\[)(\\d*)(\\])").matcher(var11).find()) {
 			var11=var11.split("[\\=\\[\\]]")[0]+"[1]"+"["+var11.split("[\\=\\[\\]]")[1]+"]"+"="+var11.split("[\\=\\[\\]]")[3];
 		}
-	    
+	    //then find the index of that var2 in the matrixvariable and crop it and stor in the var22 
 	    index=(Changing.matrixVariable.indexOf("$"+var2.replaceAll("[()]", "")+"["))+1;
 	    var22 = Changing.matrixVariable.substring(index, Changing.matrixVariable.indexOf("$",index)) ;
-	    
+	    //if the array are in var2 then it stor like (a[2]={5 5} ) but we required in matrix form (a[1][2]={5 5} )
 	    if (!Pattern.compile(var2.replaceAll("[()]", "")+"(\\[)(\\d*)(\\])"+"(\\[)(\\d*)(\\])").matcher(var22).find()) {
 	    	var22=var22.split("[\\=\\[\\]]")[0]+"[1]"+"["+var22.split("[\\=\\[\\]]")[1]+"]"+"="+var22.split("[\\=\\[\\]]")[3];
 		}
-	    
-	    String[] mANDn1 = (var11).split("[\\[\\]]");
+	    //size of matrix which is in var1 and var2 are stored in mANDn1 and mANDn2
+	    String[] mANDn1 = (var11).split("[\\[\\]]"); //
 	    String[] mANDn2 = (var22).split("[\\[\\]]");
 	    
 	    //if matrix size are not match
