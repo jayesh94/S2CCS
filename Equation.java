@@ -99,39 +99,38 @@ public class Equation {
 					// Variable one & variable two both are matrix
 					if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
 							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-						// var1, var2 and division sign is sent to EquationSolver.TWOMatrixAddMulSubDiv for dividing both matrices in c representation
+						// var1, var2 and division sign is sent to EquationSolver.TWOMatrixAddMulSubDiv for dviding both matrices in c representation
 						EquationSolver.TWOMatrixAddMulSubDiv(var1, var2, "/");
-						//when matrix division is representated according to c then ans of that division replaces var1 and var2 arithmetic in small equation
-						//Ex. small equation =a+f./55 then it changes to a+ans 
+						//when both matrix divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f./55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\.\\/]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
 					// Variable one (var1) is matrix variable among two variables var1 & var2
 					else if(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.Initializevariable).find()){
-						// var1, var2 and division sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for dividing matrices and number or variable in c representation
+						// var1, var2 and division sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for dviding matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"/");
-						//when matrix division is representated according to c then ans of that division replaces var1 and var2 arithmetic in small equation
-						//Ex. small equation =a+f./55 then it changes to a+ans 
+						//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f./55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\.\\/]"+var2), Equation.AnsTemp.split("=")[1]);
 						
 					}
 					
 					// Variable two (var2) is matrix variable among two variables var1 & var2
 					else if(Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.Initializevariable).find()){
-						// var1, var2 and division sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for dividing matrices and number or variable in c representation
+						// var1, var2 and division sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for dviding matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"/");
-						//when matrix division is representated according to c then ans of that division replaces var1 and var2 arithmetic in small equation
-						//Ex. small equation =a+f./55 then it changes to a+ans 
+						//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f./55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\.\\/]"+var2), Equation.AnsTemp.split("=")[1]);
 						
 					}
 					
-					// No matrix variable in both variables var1 and var2
-					
-					//var1 is present in Changing.variablevalue and var2 is present in Changing.variablevalue
-					//or var1 is present in Changing.variablevalue and var2 is any number like '2'
-					//or var2 is present in Changing.variablevalue and var1 is any number like '2'
-					//or var1 and var2 both are number
+					// No matrix variable in two variables
+					//var1 are present in Changing.variablevalue and var2 are present in Changing.variablevalue
+					//or var1 are present in Changing.variablevalue and var2 is any number like '2'
+					//or var2 are present in Changing.variablevalue and var1 is any number like '2'
+					//var1 and var2 both are number
 					else if((Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
 							&& Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
 						|| (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
@@ -140,57 +139,56 @@ public class Equation {
 							&& Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
 						|| (Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
 							&& Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find())){
-						// var1, var2 and division sign is sent to EquationSolver.TwoVarORNumber for dividing  two numbers or variables in c representation
+						// var1, var2 and division sign is sent to EquationSolver.TwoVarORNumber for dviding  two numbers or variables in c representation
 						EquationSolver.TwoVarORNumber(var1, var2, "/");
-						//when matrix division is representated according to c then ans of that division replaces var1 and var2 arithmetic in small equation
-						//Ex. small equation =a+f./55 then it changes to a+ans 
+						//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f./55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\.\\/]"+var2), Equation.AnsTemp);
 					}
 					
 					// variable var2 is matrix variable and var1 is input variable i.e real time variable
 					else if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find() 
 							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-						// TODO
+						
 					}
 					
 					// variable var1 is matrix variable and var2 is input variable i.e real time variable
 					else if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
 							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()) {
-						//TODO
+						
 					}
 					
-					//no matrix variable among the two variables, at least one input variable i.e real time variable
+					//no matrix variable in two variable only at list one input variable i.e real time variable
 				
-					// var1 is present in Changing.InputVariable or var2 is present in Changing.InputVariable
-					// and var1 is present in Changing.InputVariable or var1 is any number like '2'
-					// or var1 is present in Changing.variablevalue or var2 is present in Changing.InputVariable
-					// or var2 is any number like '2' or var2 is present in Changing.variablevalue
+					//var1 are present in Changing.InputVariable and var2 are present in Changing.InputVariable
+					//or var1 are present in Changing.InputVariable and var2 is any number like '2'
+					//or var2 are present in Changing.InputVariable and var1 is any number like '2'
 					else if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						&&(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
-						|| Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
-						|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
-						|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())) {
+									|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+							&&(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+									|| Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
+									|| Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
+									|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+									|| Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
+									|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())) {
 						
 						Find.InputVariableCheck(var1,var2);
 						RealTimeEquation.VariableOne(var1, var2, "/");
-						//when matrix division is representated according to c then ans of that division replaces var1 and var2 arithmetic in small equation
-						//Ex. small equation =a+f./55 then it changes to a+ans 
+						//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f./55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\/]"+var2), Equation.AnsTemp);
 						
 					}
 				}
 				
-				//     "/" (Division) comes in small Equation 
-				// 	Ex. input= c+(b-(a/2))
+				// / (Division) are come in small Equation 
+				// Ex. input= c+(b-(a/2))
 				//     small equation= a./2
-				//     In below loop the small equation is split from "/" and "a" and "2" is obtained 
+				//   In below loop the small equation is split from "/" and "a" and "2" is obtained 
 				//    and sent to the Division method to convert in c code which is yet to be done
 				else if(smallequation.indexOf("/")!=-1){
-					String[] var = smallequation.split("[\\/]");//small equation are split by / and create two variable
-											//ex. if small equation is a+v/55 then create a+v and 55
+					String[] var = smallequation.split("[\\/]");//small equation are split by / and creat two variable
+											//ex. if small equation is a+v/55 then creat a+v and 55
 					String[] vartemp1 = var[0].split("[\\+\\-\\/\\^\\~\\=\\:\\*]");
 					String var1 = vartemp1[vartemp1.length-1];
 					String[] vartemp2 = var[1].split("[\\+\\-\\/\\^\\~\\=\\:\\*]");
@@ -199,33 +197,34 @@ public class Equation {
 					
 					// variable one & variable two both are matrix
 					if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
-					&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
+							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
 						
 						// TODO Add Function for division of two matrix	
 						smallequation=smallequation.replaceFirst((var1+"[\\/]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
-					// Variable one (var1) is matrix variable among two variables
+					// Variable one (var1) is matrix variable in two variables
 					else if(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.Initializevariable).find()){
-						
-						// var1, var2 and division sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for dividing matrices and number or variable in c representation
+					// var1, var2 and division sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for dviding matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"/");
-						//when division is representated according to c then ans of that division replaces var1 and var2 arithmetic in small equation
-						//Ex. small equation =a+f/55 then it changes to a+ans 
+					//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f/55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\/]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
-					
-					// Variable two (var2) is matrix variable among two variables
+					// Variable two (var2) is matrix variable in two variables
 					else if(Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.Initializevariable).find()){
-						
-						// var1, var2 and division sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for dviding matrices and number or variable in c representation
+					// var1, var2 and division sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for dviding matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"/");
-						//when division is representated according to c then ans of that division replaces var1 and var2 arithmetic in small equation
-						//Ex. small equation =a+f/55 then it changes to a+ans 
+					//when divigen are representated according to c then ans of that divigen put into small equation and remove var1 and vae2 
+						//small equation =a+f/55 then it changes to a+ans 
 						smallequation=smallequation.replaceFirst((var1+"[\\/]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
 					// No matrix variable in two variables
+					//var1 are present in Changing.variablevalue and var2 are present in Changing.variablevalue
+					//or var1 are present in Changing.variablevalue and var2 is any number like '2'
+					//or var2 are present in Changing.variablevalue and var1 is any number like '2'
+					//var1 and var2 both are number
 					else if((Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
 							&& Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
 						|| (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
@@ -253,20 +252,15 @@ public class Equation {
 						
 					}
 					
-					//no matrix variable among the two variables, at least one input variable i.e real time variable
-				
-					// var1 is present in Changing.InputVariable or var2 is present in Changing.InputVariable
-					// and var1 is present in Changing.InputVariable or var1 is any number like '2'
-					// or var1 is present in Changing.variablevalue or var2 is present in Changing.InputVariable
-					// or var2 is any number like '2' or var2 is present in Changing.variablevalue
+					//no matrix variable in two variable only at list one input variable
 					else if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						&&(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
-						|| Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
-						|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
-						|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())) {
+									|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+							&&(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+									|| Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
+									|| Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
+									|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+									|| Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
+									|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())) {
 						
 						Find.InputVariableCheck(var1,var2);
 						RealTimeEquation.VariableOne(var1, var2, "/");
@@ -325,12 +319,11 @@ public class Equation {
 						smallequation=smallequation.replaceFirst((var1+"[\\.\\*]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
-					// No matrix variable in both variables var1 and var2
-					
-					//var1 is present in Changing.variablevalue and var2 is present in Changing.variablevalue
-					//or var1 is present in Changing.variablevalue and var2 is any number like '2'
-					//or var2 is present in Changing.variablevalue and var1 is any number like '2'
-					//or var1 and var2 both are number
+					// No matrix variable in two variables
+					//var1 are present in Changing.variablevalue and var2 are present in Changing.variablevalue
+					//or var1 are present in Changing.variablevalue and var2 is any number like '2'
+					//or var2 are present in Changing.variablevalue and var1 is any number like '2'
+					//var1 and var2 both are number
 					else if((Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
 							&& Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
 						|| (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
@@ -395,8 +388,7 @@ public class Equation {
 					
 					// variable one & variable two both are matrix
 					if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
-					    &&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-						
+							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
 						// var1, var2 and Multiplication sign is sent to EquationSolver.TWOMatrixAddMulSubDiv for Multiplication of both matrices in c representation
 						EquationSolver.TwoMatrixMultiplication(var1, var2);
 						//when both matrix Multiplication are representated according to c then ans of that Multiplication put into small equation and remove var1 and vae2 
@@ -406,8 +398,7 @@ public class Equation {
 					
 					// Variable one (var1) or Variable two (var2) is matrix variable in two variables
 					else if(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()
-						|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()){
-						
+							|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()){
 						// var1, var2 and Multiplication sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for Multiplication matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"*");
 						//when both matrix Multiplication are representated according to c then ans of that Multiplication put into small equation and remove var1 and vae2 
@@ -416,14 +407,18 @@ public class Equation {
 					}
 					
 					// No matrix variable in two variables
+					//var1 are present in Changing.variablevalue and var2 are present in Changing.variablevalue
+					//or var1 are present in Changing.variablevalue and var2 is any number like '2'
+					//or var2 are present in Changing.variablevalue and var1 is any number like '2'
+					//var1 and var2 both are number
 					else if((Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
-							&& Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
-						|| (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
-							&& Pattern.compile("(\\d+)").matcher(var2.replaceAll(" ","").replaceAll("[()]", "")).find())
-						|| (Pattern.compile("(\\d+)").matcher(var1.replaceAll(" ","").replaceAll("[()]", "")).find()
-							&& Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
-						|| (Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
-							&& Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find())){
+								&& Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
+							|| (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
+								&& Pattern.compile("(\\d+)").matcher(var2.replaceAll(" ","").replaceAll("[()]", "")).find())
+							|| (Pattern.compile("(\\d+)").matcher(var1.replaceAll(" ","").replaceAll("[()]", "")).find()
+								&& Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
+							|| (Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
+								&& Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find())){
 						
 						EquationSolver.TwoVarORNumber(var1, var2, "*");
 						//when Multiplication are representated according to c then ans of that Multiplication put into small equation and remove var1 and vae2 
@@ -446,13 +441,13 @@ public class Equation {
 					
 					//no matrix variable in two variable only at list one input variable
 					else if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						&&(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
-						|| Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
-						|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
-						|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())) {
+									|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+							&&(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+									|| Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
+									|| Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
+									|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+									|| Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
+									|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())) {
 						
 						Find.InputVariableCheck(var1,var2);
 						RealTimeEquation.VariableOne(var1, var2, "*");
@@ -461,7 +456,6 @@ public class Equation {
 						smallequation=smallequation.replaceFirst((var1+"[\\*]"+var2), Equation.AnsTemp);	
 					}
 				}
-				
 				// + (Addition) are come in small Equation 
 				// Ex. input= c+(b-(a+2))
 				//     small equation= a./2
@@ -478,25 +472,29 @@ public class Equation {
 					
 					// variable one & variable two both are matrix
 					if (Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
-					    &&Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-						
+							&&Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
 						// var1, var2 and Addition sign is sent to EquationSolver.TWOMatrixAddMulSubDiv for Addition of both matrices in c representation
 						EquationSolver.TWOMatrixAddMulSubDiv(var1.replaceAll("[()]", ""), var2.replaceAll("[()]", ""), "+");
-						//when both matrix Multiplication are representated according to c then ans of that Multiplication put into small equation and remove var1 and vae2 
-						//small equation =a+f.*55 then it changes to a+ans
+						//when both matrix Addition are representated according to c then ans of that Addition put into small equation and remove var1 and vae2 
+						//small equation =a+f+55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\+]"+var2), Equation.AnsTemp);
 					}
 					
 					// Variable one (var1) or Variable two (var2) is matrix variable in two variables
 					else if(Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()
-						|| Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()){
-					
+							|| Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()){
 						// var1, var2 and Addition sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for Addition matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"+");
+						//when both matrix Addition are representated according to c then ans of that Addition put into small equation and remove var1 and vae2 
+						//small equation =a+f+55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\+]"+var2), Equation.AnsTemp);
 					}
 					
 					// No matrix variable in two variables
+					//var1 are present in Changing.variablevalue and var2 are present in Changing.variablevalue
+					//or var1 are present in Changing.variablevalue and var2 is any number like '2'
+					//or var2 are present in Changing.variablevalue and var1 is any number like '2'
+					//var1 and var2 both are number
 					else if((Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
 							&& Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
 						|| (Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
@@ -507,6 +505,8 @@ public class Equation {
 							&& Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).matches())){
 						
 						EquationSolver.TwoVarORNumber(var1, var2, "+");
+						//when both matrix Addition are representated according to c then ans of that Addition put into small equation and remove var1 and vae2 
+						//small equation =a+f+55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\+]"+var2), Equation.AnsTemp);
 					}
 					
@@ -524,20 +524,21 @@ public class Equation {
 					
 					//no matrix variable in two variable only at list one input variable
 					else if (Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						&&(Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
-						|| Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
-						|| Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
-						|| Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())) {
+									|| Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+							&&(Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+									|| Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
+									|| Pattern.compile("\\$"+var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
+									|| Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+									|| Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
+									|| Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())) {
 						
 						Find.InputVariableCheck(var1,var2);
 						RealTimeEquation.VariableOne(var1, var2, "+");
+						//when both matrix Addition are representated according to c then ans of that Addition put into small equation and remove var1 and vae2 
+						//small equation =a+f+55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\+]"+var2), Equation.AnsTemp);	
 					}
 				}
-				
 				// - (subtraction) are come in small Equation 
 				// Ex. input= c+(b-(a-2))
 				//     small equation= a./2
@@ -557,6 +558,8 @@ public class Equation {
 							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
 					// var1, var2 and subtraction sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for subtraction of both matrices in c representation	
 						EquationSolver.TWOMatrixAddMulSubDiv(var1, var2, "-");
+						//when both matrix subtraction are representated according to c then ans of that subtraction put into small equation and remove var1 and vae2 
+						//small equation =a+f-55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\-]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
@@ -565,6 +568,8 @@ public class Equation {
 					
 					// var1, var2 and subtraction sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for subtraction  of matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"-");
+						//when both matrix subtraction are representated according to c then ans of that subtraction put into small equation and remove var1 and vae2 
+						//small equation =a+f-55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\-]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
@@ -572,10 +577,16 @@ public class Equation {
 					else if(Pattern.compile("$"+var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d+)(\\])").matcher(Changing.matrixVariable).find()){
 						// var1, var2 and subtraction sign is sent to EquationSolver.OneMatrixAddMulVAR1SubVAR1Div for subtraction  of matrices and number or variable in c representation
 						EquationSolver.OneMatrixAddMulVAR1SubVAR1Div(var1, var2,"-");
+						//when both matrix subtraction are representated according to c then ans of that subtraction put into small equation and remove var1 and vae2 
+						//small equation =a+f-55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\-]"+var2), Equation.AnsTemp.split("=")[1]);
 					}
 					
 					// No matrix variable in two variables
+					//var1 are present in Changing.variablevalue and var2 are present in Changing.variablevalue
+					//or var1 are present in Changing.variablevalue and var2 is any number like '2'
+					//or var2 are present in Changing.variablevalue and var1 is any number like '2'
+					//var1 and var2 both are number
 					else if((Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
 							&& Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())
 						|| (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
@@ -588,7 +599,10 @@ public class Equation {
 							&& Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find())){
 						
 						EquationSolver.TwoVarORNumber(var1, var2, "-");
+						//when both matrix subtraction are representated according to c then ans of that subtraction put into small equation and remove var1 and vae2 
+						//small equation =a+f-55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\-]"+var2), Equation.AnsTemp);
+						//if the ans is negative then add the _ for detection
 						if((Pattern.compile("-"+var2).matcher(smallequation)).matches()){
 							
 							smallequation=smallequation.replaceFirst(("[\\-]"+var2), var2+"_");
@@ -597,40 +611,56 @@ public class Equation {
 					
 					// variable two is matrix variable and first is input variable
 					else if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find() 
-						&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
+							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
 						
 					}
 					
 					// variable one is matrix variable and second is input variable
 					else if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find() 
-						&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()) {
+							&&Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()) {
 						
 					}
 					
 					//no matrix variable in two variable only at list one input variable
 					else if (Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						&&(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
-						|| Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
-						|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
-						|| Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
-						|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())) {
+									|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+							&&(Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+									|| Pattern.compile("(\\d+)").matcher(var1.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
+									|| Pattern.compile(var1.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find()
+									|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.InputVariable).find()
+									|| Pattern.compile("(\\d+)").matcher(var2.replaceAll("\\.","").replaceAll(" ","").replaceAll("[()]", "")).find()
+									|| Pattern.compile(var2.replaceAll(" ","").replaceAll("[()]", "")).matcher(Changing.variablevalue).find())) {
 						
 						Find.InputVariableCheck(var1,var2);
 						RealTimeEquation.VariableOne(var1, var2, "-");
+						//when both matrix subtraction are representated according to c then ans of that subtraction put into small equation and remove var1 and vae2 
+						//small equation =a+f-55 then it changes to a+ans
 						smallequation=smallequation.replaceFirst((var1+"[\\-]"+var2), Equation.AnsTemp);	
 					}
 				}
 			}
-			
+			// replace the ( bracket by \\( for regex
 			A=A.replaceAll("[\\(]", "[\\(]");
+			// replace the ) bracket by \\) for regex
 			A=A.replaceAll("[\\)]", "[\\)]");
+			//small equation is changed according c hence it replace by its ans whivh is stoerd in 'A'
 			input=input.replaceFirst(A, smallequation.replaceAll("[()]", ""));
 		}
 			// Equation.TempEquation are not null
 			if(Equation.TempEquation!=""){
-				
+				// when equation are represent according to c that time for some representation like matrix operation 
+				//ex. a=array1+array2
+				//converted code is-
+				//for (i = 0; i < m; i++
+				//{
+				//for (j = 0; j < n; j++)
+				//{
+				//ans[i][j] = array1[i][j] + array2[i][j];
+				//}
+				//}
+				//in above equation ans variable is self generated hence it only replace with original variable in main program and Initializevariable
+				//like ans[i][j] = array1[i][j] + array2[i][j]; is change to
+				//a[i][j] = array1[i][j] + array2[i][j];
 				if(Pattern.compile(Equation.AnsTemp).matcher(Equation.TempEquation).find()) {
 					
 					Changing.MainProgram= Changing.MainProgram+"\n"+Equation.TempEquation.replaceAll(Equation.AnsTemp, input.split("=")[0]);
@@ -638,28 +668,33 @@ public class Equation {
 				}
 				
 				else{
-					
+					//when equation is like a=k+55 'k' is not matrix
+					//then out put is k+55
+					// hence we add the ans variable and Initializevariable also
 					Changing.MainProgram= Changing.MainProgram+"\n"+input.split("=")[0]+"="+Equation.TempEquation+";";
 					Changing.InputVariable=Changing.InputVariable+input.split("=")[0]+"$";
 					Find.FindInitializevariable(input.split("=")[0], "Int16");
+					//cheack thes variable is input output variable or not in Find.InputVariableCheck class
 					Find.InputVariableCheck(input.split("=")[0],"varfxgggcb2$$$$$$$");
 				}
 			}
 			// in equation real time variable are not present that time Equation.TempEquation are null
 			else{
-				
+				//if the negative ans are come in equation then add negatine sign at output
 				if(Pattern.compile("\\d+"+"_").matcher((input.split("=")[1]).replaceAll("\\.", "")).matches()){
 					
 					Changing.MainProgram= Changing.MainProgram+"\n"+input.split("=")[0]+"= -"+(input.split("=")[1]).split("_")[0]+";";
-					Find.FindInitializevariable(input.split("=")[0], "Int16");
+					Find.FindInitializevariable(input.split("=")[0], "Int16"); 
 					Changing.variablevalue=Changing.variablevalue+input+"$";
 				}
+				//if only integer are in the equation then its ans also integer then it Initializ as integer
 				else if(Pattern.compile("\\d+").matcher((input.split("=")[1])).matches()){
 					
 					Changing.MainProgram= Changing.MainProgram+"\n"+input+";";
 					Find.FindInitializevariable(input.split("=")[0], "Int16");
 					Changing.variablevalue=Changing.variablevalue+input+"$";
 				}
+				//if any float value are in equation then ans also float hence it Initializ as float
 				else if(Pattern.compile("\\d+").matcher((input.split("=")[1]).replaceAll("\\.", "")).matches()){
 					
 					Changing.MainProgram= Changing.MainProgram+"\n"+input+";";
@@ -672,7 +707,7 @@ public class Equation {
 	
 	
 	
-	
+	//TODO 
 	public static void MatrixWithVariables(String input) {
 		// TODO Auto-generated method stub
 
