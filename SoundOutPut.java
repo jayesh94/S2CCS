@@ -28,7 +28,7 @@ public class SoundOutPut {
 				 //***************
 				Changing.MainProgram = "AIC3204_config(freq_" + resultTemp + ");" + "\n" + Changing.MainProgram;
 			}
-			
+			//if any variable are present that time finf ariable value and then add as a sampling frequency
 			else if(Pattern.compile("(\\w*)").matcher(result[1]).matches()) {
 				
 			}
@@ -39,20 +39,21 @@ public class SoundOutPut {
 			//TODO according bit parameter create a program
 		}
 		
-		// to check value in result [0]
+		// to check value in result [0] ex. sound(a,freq,bit) in that seperate 'a' 
 		if (Pattern.compile("(\\w*)").matcher(result[0]).matches() || Pattern.compile("(\\w*)(')").matcher(result[0]).matches() || Pattern.compile("(-)(\\w*)").matcher(result[0]).matches()  ) { 
     		int lastindex = 0;
-    		result = (result[0]).split("'"); 		
+    		result = (result[0]).split("'"); // if transpose of 'a' is present then it not required for transmistion of bit 		
     		int index = 0;
-    		//Remove the Initialization of recursion variable like (a[1]={};)
+    		//Remove the Initialization of recursion variable like (a[1]={};) i.s a is remove from Initializevariable
     		if(Pattern.compile("\\$"+result[0]+"\\[1\\]").matcher(Changing.matrixVariable).find()) {
     			Changing.Initializevariable= Changing.Initializevariable.replaceAll("int "+result[0]+"\\[1\\]=\\{\\};", "");
     		}
 			
-			//Checking further occurrence of a=[]
+			//Checking further occurrence of a=[] i.e cheack in main program the occurrence of transmitating variable and it representated according to DSP
     		while ((Changing.MainProgram.indexOf(result[0]+"=" , lastindex))!=-1 || (Changing.MainProgram.indexOf(result[0]+"[" , lastindex))!=-1) {
-
-    					if((Changing.MainProgram.indexOf(result[0]+"[" , lastindex))!=-1){
+					//cheack in main program the position of the variable which is transmiting 
+    					if((Changing.MainProgram.indexOf(result[0]+"[" , lastindex))!=-1){ 
+    						//find the index of that variable
     						index = Changing.MainProgram.indexOf(result[0]+"[" , lastindex);
     						removingvariable = Changing.MainProgram.substring(index+result[0].length()+1, Changing.MainProgram.indexOf("]",index) );
     					}
