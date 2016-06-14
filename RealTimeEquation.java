@@ -1,5 +1,8 @@
 
-/*This class is called when there is any operation on input variable (real time variable) for the purpose of conversion in c language*/
+/*This class is called when there is any arithmetic operation involving input variable (real time variable). Whenever there is 
+arithmetic operation involving matrices Ex.b+a*8 where a is matrix then the result is saved as b+ans so as to be used in converted c code.
+This causes other arithmetic operations on any variable even input variable to be saved as ans. Thus we hae to revert it back to its 
+original form Ex. convert ans back as a*8 if a is input variable */
 
 package Main;
 
