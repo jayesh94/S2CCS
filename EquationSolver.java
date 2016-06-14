@@ -84,7 +84,7 @@ public class EquationSolver {
 			var2=var2.replaceAll("[()]", "");
 			bracket2=")";
 		}
-		
+		// if in the Equation.TempEquation previous for loop operation is present
 		if(Pattern.compile("\\$"+Equation.AnsTemp+"(\\[)(\\d+)(\\])").matcher(Changing.matrixVariable).find()
 				&& (Pattern.compile(Equation.AnsTemp).matcher(var1.replaceAll(" ","").replaceAll("[()]", "")).matches()
 						||Pattern.compile(Equation.AnsTemp).matcher(var2.replaceAll(" ","").replaceAll("[()]", "")).matches())) {
@@ -108,30 +108,30 @@ public class EquationSolver {
 				//}
 				//}
 				
-				//ans[i][j] = array1[i][j] + array2[i][j] is not available at 
+				//ans[i][j] = array1[i][j] + array2[i][j] is not present at 3rd last line then it will be add and also new operation will be added
 				if(Pattern.compile("(\\W*)").matcher(mul[length-3]).matches()){
 					
 					mul[length-3]=mul[length-3]+"\n"+var1+"["+mANDn[1]+"]"+"["+mANDn[3]+"]"+"="+bracket1+var1+"["+mANDn[1]+"]"+"["+mANDn[3]+"]"+Operator+var2+bracket2+";";
 				}
-				//array0[i][j]=array0[j][i] are available
+				//array0[i][j]=array0[j][i] are present at 3rd last line then only add new operation
 				else{
 					
-					mul[length-3]=mul[length-3].split(";")[0];
-					mul[length-3]=mul[length-3]+Operator+var2+bracket2+";";
+					mul[length-3]=mul[length-3].split(";")[0]; //remove the ; from 3rd last line
+					mul[length-3]=mul[length-3]+Operator+var2+bracket2+";";  //then add new operation and ;
 				}
 				
 				Equation.TempEquation="";
-				
+				//aal lines in mul add again into Equation.TempEquation
 				for (String temp:mul) {
 					Equation.TempEquation=Equation.TempEquation+temp+"\n";
 				}
 			}
 			
-			//Variable 2 are matrix variable
+			//Variable 2 are matrix variable i.e var2 are matrix variable
 			if(Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")+"(\\[)(\\d*)(\\])").matcher(Changing.matrixVariable).find()) {
-				
+				//in Equation.TempEquation split all lne seperately  and stored into the mul
 				String[] mul=Equation.TempEquation.split("[\\n]");
-				int length=mul.length;
+				int length=mul.length;//find no of line 
 				
 				if(Pattern.compile("(\\W*)").matcher(mul[length-3]).matches()){
 					mul[length-3]=mul[length-3]+"\n"+var1+"["+mANDn[1]+"]"+"["+mANDn[3]+"]"+"="+bracket1+var1+"["+mANDn[1]+"]"+"["+mANDn[3]+"]"+Operator+var2+bracket2+";";
