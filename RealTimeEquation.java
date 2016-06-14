@@ -2,7 +2,7 @@
 /*This class is called when there is any arithmetic operation involving input variable (real time variable). Whenever there is 
 arithmetic operation involving matrices Ex.b+a*8 where a is matrix then the result is saved as b+ans so as to be used in converted c code.
 This causes other arithmetic operations on any variable even input variable to be saved as ans. Thus we hae to revert it back to its 
-original form Ex. convert ans back as a*8 if a is input variable */
+original form Ex. convert ans back as a*8 if a is input variable. This is the main functioning of this class. */
 
 package Main;
 
@@ -28,13 +28,16 @@ public class RealTimeEquation {
 			var11=var1;
 		}
 		
-		//if the variable in var11 is also in temp variable then it is temporary hence it will be removed
+		// If the variable in var11 is also in temp variable then it is temporary hence it will be removed
+		// The whole equation ans= e+78 is stored in Equation.tempvariable for the purpose of simplifying detection process
 		if (Pattern.compile("\\$"+var11.replaceAll(" ","").replaceAll("[()]", "")).matcher(Equation.tempvariable).find()) {
 			
 			 Changing.InputVariable=Changing.InputVariable.replaceFirst(var11+"$", "");
-			 var11=var11.split("=")[1];     // in var11 ans=44+g are stored but we required only 44+g hence it will be //cropped
+			 var11=var11.split("=")[1];     // in var11 ans=44+g are stored but we required only 44+g hence it will be cropped
 		}
 		
+		
+		// Similarly with var2
 		if(Pattern.compile("\\$"+var2.replaceAll(" ","").replaceAll("[()]", "")+"=").matcher(Changing.InputVariable).find()) {
 			
 			int index = (Changing.InputVariable.indexOf("$"+var2.replaceAll("[()]", "")))+1;
@@ -50,12 +53,12 @@ public class RealTimeEquation {
 			 Changing.InputVariable=Changing.InputVariable.replaceFirst(var22+"$", "");
 			 var22=var22.split("=")[1];
 		}
-                  //the equation are represented according to c with maths operator
-		
-		Equation.AnsTemp=var11+Operator+var22;
+                
+                // The equation is represented according to c with maths operator
+		Equation.AnsTemp=var11+Operator+var22;// Saving the original equation to Equation.AnsTemp
 		int q = 0;
 		 String ans;
-		 //ans are stored in temp ans hence generate temp variable
+		 //following loop is for creation of ans0, ans1,.... which ever is not initially used
 		 do{
 			 
 			ans = "ans";
@@ -64,8 +67,8 @@ public class RealTimeEquation {
 			q++;
 		}while(Pattern.compile(ans+"$").matcher(Changing.InputVariable).find());
 		 
-		 Equation.TempEquation=Equation.AnsTemp;
-		 Changing.InputVariable=Changing.InputVariable+ans+"="+Equation.AnsTemp+"$"; // we stored that that temp ans in input variable for further solution
+		 Equation.TempEquation=Equation.AnsTemp;// Saving the equation to Equation.TempEquation 
+		 Changing.InputVariable=Changing.InputVariable+ans+"="+Equation.AnsTemp+"$"; // we stored this ans in input variable for further solution
 		 Equation.AnsTemp=ans;
 		 Equation.tempvariable=Equation.tempvariable+ans+"$";  // for avoiding duplication that will be stored in temp variable
 	}
