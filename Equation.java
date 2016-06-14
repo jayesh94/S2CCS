@@ -14,9 +14,10 @@ import java.util.regex.Pattern;
 
 public class Equation {
 	
-	public static String AnsReal="";
+	public static String AnsReal="";// 
 	public static String AnsTemp="";  
-	public static String tempvariable="$"; 
+	public static String tempvariable="$"; // when there is operation on arithmetic the answer value is stored here like "ans"
+					
 	public static String TempEquation= "";
 
 	public static void matrix(String input) {
