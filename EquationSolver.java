@@ -216,7 +216,8 @@ public class EquationSolver {
 		}
 	}
 	
-	//TODO remove the solving process only replace the equation according to the c and dsp
+	//TODO In following method arithmetic between numbers are being solved which is to be removed by
+	// replacing the equation according to the c and dsp compatible code.
 	public static Object TwoVarORNumber(String var1 , String var2 , String Operator) {
 		String var11 = null;
 		String var22 = null;
