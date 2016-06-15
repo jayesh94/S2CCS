@@ -4,7 +4,12 @@
 /*  The scilab code is sent here from Mars.java for scanning and parsing purpose.
    The code is detected line by line in this JavaCC based on the tokens and the grammar assigned to those tokens in this
    .jj code. While detecting the scilab code various classes are called for conversion of code based on the detected tokens
-   and their allocated grammar. Whole scilab code should be detected here based on the code written.
+   and their allocated grammar. Whole scilab code should be detected here based on the code written. 
+   
+    Here we are using a StringBuffer buffer and an ArrayList<String> line created in Mars.java. When a token is detected, that token is 
+   saved in buffer. The tokens are continuously saved in this buffer until a new line is encountered. As a new line is encountered the 
+   whole contents of buffer is saved to line. Like this we are able to retrieve the lines detected in JavaCC and perform conversion 
+   accordingly.
 
     Compilation of this JavaCC code will create 7 java classes in which the interpretation of MainGrammar.jj is present in java coding.
    The seven files are namely ParseException.java, SecondJavaCC.java, SecondJavaCCConstants.java, SecondJavaCCTokenManager.java,
