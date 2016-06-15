@@ -1,3 +1,15 @@
+
+/*This class is called from Equation class with the variables and the arithmetic operator between them. The conversion for matrix
+addition, subtraction, multiplication and division is done here. 
+
+ Addition, subtraction, multiplication and division operation between matrices, variables and numbers is being converted in c
+ compatible program with proper amount of for loop required and initialization of extra variables created in the process. As
+ operations between matrices require looping in c programming.
+
+ Arithmetic operation between numbers is being solved and stored using script engine. This has to be replaced with normal
+ replacement code.
+*/
+
 package Main;
 
 import java.util.regex.Pattern;
